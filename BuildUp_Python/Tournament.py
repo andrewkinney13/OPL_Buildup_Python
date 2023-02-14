@@ -8,5 +8,5 @@ from Round import Round
 class Tournament:
 
     def PlayTournament(self):
-        print("AHHH")
+        print("Welcome to Andrew Kinney's BuildUp Program for OPL\n")
 
