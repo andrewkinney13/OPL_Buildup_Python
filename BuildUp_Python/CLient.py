@@ -1,6 +1,9 @@
 
+from GUI import GUI
 from Tournament import Tournament
 
-# Start the tournament
-myTournament = Tournament()
-myTournament.StartTournament()
+# Initalize GUI
+myGUI = GUI()
+
+# Initalize tournament object
+myTournament = Tournament(myGUI)
