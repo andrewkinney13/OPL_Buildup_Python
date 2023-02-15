@@ -29,6 +29,7 @@
     <Compile Include="Round.py" />
     <Compile Include="Tile.py" />
     <Compile Include="Tournament.py" />
+    <Compile Include="GUI.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

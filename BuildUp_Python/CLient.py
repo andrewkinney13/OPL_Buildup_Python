@@ -1,5 +1,7 @@
 
-from Tournament import Tournament 
+import tkinter as tk
+from GUI import GUI 
 
-myTournament = Tournament()
-myTournament.PlayTournament()
+# Create the GUI
+
+GUI()

@@ -7,6 +7,11 @@ from Round import Round
 
 class Tournament:
 
-    def PlayTournament(self):
-        print("Welcome to Andrew Kinney's BuildUp Program for OPL\n")
+    def InitTwoPlayers(self):
+        print("TWOPLAYERS")
 
+    def InitFourPlayers(self):
+        print("FOUR PLAYERS")
+
+    def LoadSerializationFile(self):
+        print("LOAD")
