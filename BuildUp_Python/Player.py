@@ -6,7 +6,7 @@ class Player:
     def __init__(self):
         self.score = 0
         self.roundsWon = 0
-        self.isTheirTurn = True
+        self.isTheirTurn = False
 
         print("should print 4 times")
 
