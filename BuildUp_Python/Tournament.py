@@ -60,7 +60,11 @@ class Tournament:
 
     # Initalize new game from serialization file
     def LoadSerializationFile(self):
-        print("LOAD")
+
+        # Load in file, assign attributes
+
+        # Play Tournament
+        self.PlayTournament()
 
     # Ask user what size domino set to play with
     def AskDominoSetSize(self):
