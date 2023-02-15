@@ -39,8 +39,8 @@ class Tournament:
 
         # Initalize 2 players
         self.Players = []
-        self.Players.append(Human())
-        self.Players.append(Computer())
+        self.Players.append(Human('Human'))
+        self.Players.append(Computer('Computer'))
 
         # Ask for size of domino set
         self.AskDominoSetSize()
@@ -50,10 +50,10 @@ class Tournament:
 
         # Initalize 4 players
         self.Players = []
-        self.Players.append(Human())
-        self.Players.append(Human())
-        self.Players.append(Computer())
-        self.Players.append(Computer())
+        self.Players.append(Human('Human 1'))
+        self.Players.append(Human('Human 2'))
+        self.Players.append(Computer('Computer 1'))
+        self.Players.append(Computer('Computer 2'))
 
         # Ask for size of domino set
         self.AskDominoSetSize()

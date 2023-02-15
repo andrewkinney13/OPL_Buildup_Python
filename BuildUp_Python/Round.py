@@ -12,7 +12,7 @@ class Round:
     def PlayRound(self):
 
         for i in range(len(self.Players)):
-            print("PLAYER HERE!")
+            print(self.Players[i].name + " here!")
             print("DECK HERE, WITH SIZE: " + str(self.Decks[i].size))
         
         pass
