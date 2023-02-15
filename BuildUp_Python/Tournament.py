@@ -15,8 +15,8 @@ class Tournament:
 
         # Create inital menu screen
         self.GUI.CreateLabel("Welcome to my BuildUp Program for OPL!\nPlease seleect how to initalize your game...")
-        self.GUI.CreateButton("New Two Player Game", self.InitTwoPlayers)
-        self.GUI.CreateButton("New Four Player Game", self.InitFourPlayers)
+        self.GUI.CreateButton("New Two Player Game", self.DeclareTwoPlayers)
+        self.GUI.CreateButton("New Four Player Game", self.DeclareFourPlayers)
         self.GUI.CreateButton("Load Game from Serialization File", self.LoadSerializationFile)
 
         # Start the "mainloop" (event driven program)
@@ -26,16 +26,13 @@ class Tournament:
     def PlayTournament(self):
         
         # Initalize Round object with players
-        self.Round = Round(GUI, self.Players, self.Decks)
-
-        # Clear the GUI
-        self.GUI.ClearWindow()
+        self.Round = Round(self.GUI, self.Players, self.Decks)
 
         # Play a round of BuildUp
-        self.Round.PlayRound()
+        self.Round.PlayRound(self.AskNewRound)
 
-    # Initalize new game with two players (1 human, 1 computer)
-    def InitTwoPlayers(self):
+    # Declare two players (1 human, 1 computer)
+    def DeclareTwoPlayers(self):
 
         # Initalize 2 players
         self.Players = []
@@ -45,8 +42,8 @@ class Tournament:
         # Ask for size of domino set
         self.AskDominoSetSize()
         
-    # Initalize new game with four players (2 human, 2 computer)
-    def InitFourPlayers(self):
+    # Declare four players (2 human, 2 computer)
+    def DeclareFourPlayers(self):
 
         # Initalize 4 players
         self.Players = []
@@ -58,7 +55,7 @@ class Tournament:
         # Ask for size of domino set
         self.AskDominoSetSize()
 
-    # Initalize new game from serialization file
+    # Initalize game state from serialization file
     def LoadSerializationFile(self):
 
         # Load in file, assign attributes
@@ -70,21 +67,38 @@ class Tournament:
     def AskDominoSetSize(self):
         self.GUI.ClearWindow()
         self.GUI.CreateLabel("What Size Set of Domino Tiles\nWould you Like to Play With?")
-        self.GUI.CreateButton("Double-six", lambda: (self.SetDecks(6)))
-        self.GUI.CreateButton("Double-seven", lambda: (self.SetDecks(7)))
-        self.GUI.CreateButton("Double-eight", lambda: (self.SetDecks(8)))
-        self.GUI.CreateButton("Double-nine", lambda: (self.SetDecks(9)))
+        self.GUI.CreateButton("Double-six", lambda: (self.DeclareDecks(6)))
+        self.GUI.CreateButton("Double-seven", lambda: (self.DeclareDecks(7)))
+        self.GUI.CreateButton("Double-eight", lambda: (self.DeclareDecks(8)))
+        self.GUI.CreateButton("Double-nine", lambda: (self.DeclareDecks(9)))
 
     # Set deck w/ domino set size
-    def SetDecks(self, size):
+    def DeclareDecks(self, tileSetSize):
         self.Decks = []
 
         # Create as many decks as there are players, with domino set size
         for i in range(len(self.Players)):
-            self.Decks.append(Deck(size))
+            self.Decks.append(Deck(tileSetSize))
 
         # Decks are last thing to initalize, start the tournament
         self.PlayTournament()
 
+    # Asks the user if they want to play another round of buildup
+    def AskNewRound(self):
+        # Clear the GUI
+        self.GUI.ClearWindow()
 
+        # Ask the user
+        self.GUI.CreateLabel("Round over, play another round?")
+        self.GUI.CreateButton("yes", self.PlayTournament)
+        self.GUI.CreateButton("no", self.FinalScreen)
+
+    # Show final screen with who won and stuff
+    def FinalScreen(self):
+        # Clear the GUI
+        self.GUI.ClearWindow()
+
+        # Print goodbye 
+        self.GUI.CreateLabel("Tournament over!")
+        self.GUI.CreateButton("exit", exit)
 
