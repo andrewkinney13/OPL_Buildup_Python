@@ -30,6 +30,7 @@ class Tournament:
 
         # Play a round of BuildUp
         self.Round.PlayRound(self.AskNewRound)
+        print(self.Players[0].score)
 
     # Declare two players (1 human, 1 computer)
     def DeclareTwoPlayers(self):

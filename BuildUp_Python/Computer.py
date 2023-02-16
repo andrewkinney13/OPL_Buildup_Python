@@ -12,9 +12,8 @@ class Computer(Player):
         super().__init__()
 
      # For when in a hand, choosing where to place tile
-    def TurnChoice(self, GUI, retFunc):
-        GUI.CreateLabel("Computer does what it wants!")
-        GUI.CreateButton("Continue", retFunc)
+    def TurnChoice(self, Decks, playerNum):
+        self.GUI.CreateLabel("It's " + str(self.name) + "'s turn...")
+        self.GUI.CreateButton("Continue", self.AfterTurnFunctions)
 
-
-
+ 
