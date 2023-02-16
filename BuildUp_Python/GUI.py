@@ -9,6 +9,11 @@ class GUI():
         self.defaultHeight = 3
         self.defaultFont = ("Comic Sans MS", 14, "bold")
 
+        # Default attributes of tiles
+        self.tileWidth = 6
+        self.tileHeight = 2
+        self.tileFont = ("Comic Sans MS", 14)
+
         # Initalize window
         self.root = tk.Tk()
         self.root.geometry("1100x600")
@@ -38,7 +43,31 @@ class GUI():
     # Starts input-driven window
     def StartInputLoop(self):
         self.root.mainloop()
-    
+
+
+    # Creates Tile button (placeable tile)
+    def CreateTileButton(self, Tile, function, highlighted):
+        # Highlighted
+        if (highlighted):
+            button = tk.Button(text = Tile.GetStringForm(), font = self.tileFont, \
+                               width = self.tileWidth, height = self.tileHeight, command = function, bg = 'yellow')
+
+        # Regular color
+        else:
+
+            # White
+            if (Tile.color == 'W'):
+                button = tk.Button(text = Tile.GetStringForm(), font = self.tileFont, \
+                                   width = self.tileWidth, height = self.tileHeight, command = function)
+
+            # Black
+            else:
+                button = tk.Button(text = Tile.GetStringForm(), font = self.tileFont, \
+                                   width = self.tileWidth, height = self.tileHeight, command = function, bg = 'black', fg = 'white')
+
+        # Put button on the screen
+        button.pack(padx=5, pady=10, side=tk.LEFT)
+   
 
 
 
