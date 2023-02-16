@@ -8,7 +8,7 @@ class Round:
         self.GUI = GUI
         self.Players = Players
         self.Decks = Decks
-        self.count = 3;
+        self.count = 8;
 
         # Initalize player's data
         for playerNum in range(len(self.Players)):
@@ -79,10 +79,18 @@ class Round:
 
     # See if playable tiles are left in any player's hand
     def PlayableTilesRemain(self):
-        return True
+
+        # Go through each player, if at any point someone can play, return true
+        for playerNum in range(len(self.Players)):
+            if (self.Players[playerNum].HasPlayableTiles()):
+                return True
+
+            # No one has a playable tile
+            return False
 
     # Gives turn to next player
     def ChangeTurns(self):
+
         # Go through each player
         for playerNum in range(len(self.Players)):
 
