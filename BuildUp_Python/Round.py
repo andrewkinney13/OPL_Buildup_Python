@@ -20,13 +20,8 @@ class Round:
         # Set return function
         self.retFunc = retFunc
 
-        # Initalize decks if not done so already
-        if (len(self.Decks[0].stack) == 0):
-            pass
-
-        # Initalize hand if not done so already and boneyard tiles remain
-        if (len(self.Decks[0].hand) == 0 and len(self.Decks[0].boneyard) != 0):
-            pass
+        # Initalize decks
+        self.InitalizeDecks()
 
         # Set first turn
         self.SetFirstTurn()
@@ -121,3 +116,13 @@ class Round:
 
         # Assign first turn based on hand value
         self.Players[0].isTheirTurn = True
+
+    # Initalizes decks 
+    def InitalizeDecks(self):
+
+        # Check if stack sizes aren't zero (serialization)
+            # Check if the hands are set, if not, set them
+            # Otherwise do nothing
+
+        # Otherwise, initalize everything
+        pass
