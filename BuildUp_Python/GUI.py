@@ -25,9 +25,18 @@ class GUI():
         button.pack()
 
     # Creates label with default attributes, custom text
-    def CreateLabel(self, text):
-        label = tk.Label(text = text, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont)
-        label.pack()
+    def CreateLabel(self, text, frame = None):
+
+        # Create label on window
+        if (frame == None):
+            label = tk.Label(text = text, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont)
+            label.pack()
+
+        # Create label on frame
+        else:
+            label = tk.Label(text = text, master = frame, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont)
+            label.pack(side = 'top', fill= 'x')
+        
 
     # Creates entry box with default attributes
     def CreateEntry(self):
@@ -46,28 +55,45 @@ class GUI():
 
 
     # Creates Tile button (placeable tile)
-    def CreateTileButton(self, Tile, function, highlighted):
+    def CreateTileButton(self, frame, tile, function, highlighted = False):
         # Highlighted
         if (highlighted):
-            button = tk.Button(text = Tile.GetStringForm(), font = self.tileFont, \
+            button = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
                                width = self.tileWidth, height = self.tileHeight, command = function, bg = 'yellow')
 
         # Regular color
         else:
 
             # White
-            if (Tile.color == 'W'):
-                button = tk.Button(text = Tile.GetStringForm(), font = self.tileFont, \
+            if (tile.color == 'W'):
+                button = tk.Button(master = frame, text = tile.GetStringForm(),  font = self.tileFont, \
                                    width = self.tileWidth, height = self.tileHeight, command = function)
 
             # Black
             else:
-                button = tk.Button(text = Tile.GetStringForm(), font = self.tileFont, \
+                button = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
                                    width = self.tileWidth, height = self.tileHeight, command = function, bg = 'black', fg = 'white')
 
-        # Put button on the screen
-        button.pack(padx=5, pady=10, side=tk.LEFT)
-   
+        # Put button in the frame
+        button.pack(side = 'left', fill = 'x')
+
+    # Creates Tile main frame, holds rows of frames of buttons and labels
+    def CreateTileMainFrame(self, side):
+
+        # Create frame
+        frame = tk.Frame(self.root)
+        frame.pack(side = side, fill = 'y')
+
+        return frame
+
+    # Creates subframe within mainframe
+    def CreateTileSubFrame(self, mainFrame):
+
+        # Create subframe in mainFrame
+        subFrame = tk.Frame(mainFrame)
+        subFrame.pack(side = "top")
+
+        return subFrame
 
 
 

@@ -8,5 +8,3 @@ myGUI = GUI()
 # Initalize tournament object
 myTournament = Tournament(myGUI)
 
-
-

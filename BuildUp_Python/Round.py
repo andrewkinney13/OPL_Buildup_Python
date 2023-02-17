@@ -50,25 +50,31 @@ class Round:
     # Play hand of buildup until no playable tiles remain
     def PlayHand(self):
 
-        # Clear GUI
-        self.GUI.ClearWindow()
-
         # Check if hand is over
         if (self.PlayableTilesRemain() and self.count != 0):
             print(self.count)
-            self.Players[0].score += 15
 
             # Cycle through players
             for playerNum in range(len(self.Players)):
 
                 # If their turn, let them play
                 if (self.Players[playerNum].isTheirTurn and self.Players[playerNum].HasPlayableTiles()):
-                    self.Players[playerNum].TurnChoice(self.Decks, playerNum)
+                    self.Players[playerNum].TurnChoice(self.Players, self.Decks, playerNum)
                     break
             
             self.count -= 1
 
+        # Hand is over
         else:
+
+            # Add up the scores
+            self.AddUpScores()
+
+            # Clear the remaining tiles in hand
+            self.ClearHands()
+
+            # Alert the user
+            self.GUI.ClearWindow()
             self.GUI.CreateLabel("Hand Over!")
             self.GUI.CreateButton("Continue", lambda: (self.PlayRound(self.retFunc)))
 
@@ -121,8 +127,39 @@ class Round:
     def InitalizeDecks(self):
 
         # Check if stack sizes aren't zero (serialization)
+        if (len(self.Decks[0].stack) != 0):
+    
             # Check if the hands are set, if not, set them
+            if (len(self.Decks[0].hand) == 0):
+                self.InitalizeHands()
             # Otherwise do nothing
 
         # Otherwise, initalize everything
+        else:
+            self.InitalizeBoneyards()
+            self.InitalizeStacks()
+            self.InitalizeHands()
+
+    # Add up the scores at the end of a hand
+    def AddUpScores(self):
         pass
+
+    # Clear the remaining tiles in hand
+    def ClearHands(self):
+        for playerNum in range(len(self.Decks)):
+            self.Decks[playerNum].hand.clear()
+
+    # Initalizes all the hands
+    def InitalizeHands(self):
+        for playerNum in range(len(self.Decks)):
+            self.Decks[playerNum].CreateHand()
+
+    # Initalizes all the boneyards
+    def InitalizeBoneyards(self):
+        for playerNum in range(len(self.Decks)):
+            self.Decks[playerNum].CreateBoneyard(self.Players[playerNum].color)
+
+    # Initalizes all the stacks
+    def InitalizeStacks(self):
+        for playerNum in range(len(self.Decks)):
+            self.Decks[playerNum].CreateStack()
