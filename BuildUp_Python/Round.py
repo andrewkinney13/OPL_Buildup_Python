@@ -8,7 +8,8 @@ class Round:
         self.GUI = GUI
         self.Players = Players
         self.Decks = Decks
-        self.count = 8;
+        self.count1 = 5
+        self.count2 = 8
 
         # Initalize player's data
         for playerNum in range(len(self.Players)):
@@ -27,15 +28,18 @@ class Round:
         self.SetFirstTurn()
 
         # If hand successfully created, play a round
-        if (len(self.Decks[0].hand) != 0 or self.count >= 0):
+        if (len(self.Decks[0].hand) != 0 or self.count2 >= 0):
+            self.count1 -= 1
+            self.count2 = 8
             self.PlayHand()
 
         # This is just for testing
-        if (self.count <= 0):
-           # add up scores func
+        if (self.count1 <= 0):
+           
            # let em' know and return to tournament 
            self.GUI.ClearWindow()
            self.GUI.CreateLabel("Round Over!")
+           self.GUI.ClearStacks()
            self.GUI.CreateButton("Continue", retFunc)
 
         """
@@ -51,8 +55,7 @@ class Round:
     def PlayHand(self):
 
         # Check if hand is over
-        if (self.PlayableTilesRemain() and self.count != 0):
-            print(self.count)
+        if (self.PlayableTilesRemain() and self.count2 != 0):
 
             # Cycle through players
             for playerNum in range(len(self.Players)):
@@ -62,7 +65,7 @@ class Round:
                     self.Players[playerNum].TurnChoice(self.Players, self.Decks, playerNum)
                     break
             
-            self.count -= 1
+            self.count2 -= 1
 
         # Hand is over
         else:
@@ -148,6 +151,11 @@ class Round:
     def ClearHands(self):
         for playerNum in range(len(self.Decks)):
             self.Decks[playerNum].hand.clear()
+
+    # Clears the stack
+    def ClearStacks(self):
+        for playerNum in range(len(self.Decks)):
+            self.Decks[playerNum].stack.clear()
 
     # Initalizes all the hands
     def InitalizeHands(self):

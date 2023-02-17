@@ -17,10 +17,10 @@ class Deck:
 
         # Create boneyard
             # 0 to domino set size
-        for pipSideOneVal in range(self.maxTilePips):
+        for pipSideOneVal in range(self.maxTilePips + 1):
 
             # sideOneVal to domino set size (so no duplicates)
-            for pipSideTwoVal in range(pipSideOneVal, self.maxTilePips):
+            for pipSideTwoVal in range(pipSideOneVal, self.maxTilePips + 1):
                 self.boneyard.append(Tile(color, pipSideOneVal, pipSideTwoVal))
 
         # Shuffle the list
@@ -31,12 +31,12 @@ class Deck:
         # If enough tiles exist for default hand size
         if(len(self.boneyard) >= 6):
             for tile in range(6):
-                self.hand.append(self.TakeTileFromBoneyard)
+                self.hand.append(self.TakeTileFromBoneyard())
 
         # Make hand with whatever tiles remain
         else:
             for tile in range(len(self.boneyard)):
-                self.hand.append(self.TakeTileFromBoneyard)
+                self.hand.append(self.TakeTileFromBoneyard())
 
     # Creates stack from boneyard tiles
     def CreateStack(self):

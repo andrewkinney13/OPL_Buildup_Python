@@ -10,14 +10,15 @@ class GUI():
         self.defaultFont = ("Comic Sans MS", 14, "bold")
 
         # Default attributes of tiles
-        self.tileWidth = 6
-        self.tileHeight = 2
+        self.tileWidth = 4
+        self.tileHeight = 1
         self.tileFont = ("Comic Sans MS", 14)
 
         # Initalize window
         self.root = tk.Tk()
-        self.root.geometry("1100x600")
         self.root.title("Andrew Kinney's BuildUp Program for OPL")
+        self.root.geometry("1000x600")
+        
 
     # Creates button with default attributes, but custom text and command
     def CreateButton(self, text, command):
@@ -74,8 +75,15 @@ class GUI():
                 button = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
                                    width = self.tileWidth, height = self.tileHeight, command = function, bg = 'black', fg = 'white')
 
+        button.pack(side = 'left')
+        """
         # Put button in the frame
-        button.pack(side = 'left', fill = 'x')
+        if (tile.color == 'W'):
+            button.pack(side = 'right', fill = 'x')
+
+        else:
+            button.pack(side = 'left', fill = 'x')
+        """
 
     # Creates Tile main frame, holds rows of frames of buttons and labels
     def CreateTileMainFrame(self, side):
