@@ -1,4 +1,5 @@
 
+from pickle import FALSE
 from GUI import GUI
 
 class Round:
@@ -12,7 +13,7 @@ class Round:
         self.count2 = 8
 
         # Initalize player's data
-        for playerNum in range(len(self.Players)):
+        for playerNum in range(2):
             self.Players[playerNum].InitalizeRoundData(self.GUI, self.ChangeTurns, self.PlayHand)
 
     # Plays round
@@ -47,6 +48,7 @@ class Round:
            else: 
             self.GUI.ClearWindow()
             self.GUI.CreateLabel("Round Over!")
+            self.GUI.ClearStacks()
             self.GUI.CreateButton("Continue", retFunc)
         """
         
@@ -85,41 +87,31 @@ class Round:
     def PlayableTilesRemain(self):
 
         # Go through each player, if at any point someone can play, return true
-        for playerNum in range(len(self.Players)):
+        for playerNum in range(2):
             if (self.Players[playerNum].HasPlayableTiles()):
                 return True
 
-            # No one has a playable tile
-            return False
+        # No one has a playable tile
+        return False
 
     # Gives turn to next player
     def ChangeTurns(self):
 
-        # Go through each player
-        for playerNum in range(len(self.Players)):
+        # Player 0 had turn
+        if (self.Players[0].isTheirTurn):
+            self.Players[0].isTheirTurn = False
+            self.Players[1].isTheirTurn = True
 
-            # Find who has current turn
-            if (self.Players[playerNum].isTheirTurn):
-
-                # Unassign the turn
-                self.Players[playerNum].isTheirTurn = False
-
-                # They're the last player in list, assign turn to player zero
-                if(playerNum == len(self.Players) - 1):
-                    self.Players[0].isTheirTurn = True
-                    return
-
-                # Otherwise, assign turn to next player in list
-                else:
-                    self.Players[playerNum + 1].isTheirTurn = True
-                    return           
-                
+        # Player 1 had turn
+        else:
+            self.Players[1].isTheirTurn = False
+            self.Players[0].isTheirTurn = True
 
     # Assigns first turn based on first hand tile value, if not assigned already by serialization
     def SetFirstTurn(self):
 
         # Return without assigining if turn already set
-        for playerNum in range(len(self.Players)):
+        for playerNum in range(2):
             if (self.Players[playerNum].isTheirTurn == True):
                 return
 
@@ -149,25 +141,25 @@ class Round:
 
     # Clear the remaining tiles in hand
     def ClearHands(self):
-        for playerNum in range(len(self.Decks)):
+        for playerNum in range(2):
             self.Decks[playerNum].hand.clear()
 
     # Clears the stack
     def ClearStacks(self):
-        for playerNum in range(len(self.Decks)):
+        for playerNum in range(2):
             self.Decks[playerNum].stack.clear()
 
     # Initalizes all the hands
     def InitalizeHands(self):
-        for playerNum in range(len(self.Decks)):
+        for playerNum in range(2):
             self.Decks[playerNum].CreateHand()
 
     # Initalizes all the boneyards
     def InitalizeBoneyards(self):
-        for playerNum in range(len(self.Decks)):
+        for playerNum in range(2):
             self.Decks[playerNum].CreateBoneyard(self.Players[playerNum].color)
 
     # Initalizes all the stacks
     def InitalizeStacks(self):
-        for playerNum in range(len(self.Decks)):
+        for playerNum in range(2):
             self.Decks[playerNum].CreateStack()

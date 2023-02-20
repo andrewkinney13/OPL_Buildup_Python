@@ -15,8 +15,9 @@ class Tournament:
 
         # Create inital menu screen
         self.GUI.CreateLabel("Welcome to my BuildUp Program for OPL!\nPlease seleect how to initalize your game...")
-        self.GUI.CreateButton("New Two Player Game", self.DeclareTwoPlayers)
-        self.GUI.CreateButton("New Four Player Game", self.DeclareFourPlayers)
+        self.GUI.CreateButton("New Human vs Computer Game", self.DeclareHuamnComputerGame)
+        self.GUI.CreateButton("New Human vs Human Game", self.DeclareHumanHumanGame)
+        self.GUI.CreateButton("New Computer vs Computer Game", self.DeclareComputerComputerGame)
         self.GUI.CreateButton("Load Game from Serialization File", self.LoadSerializationFile)
 
         # Start the "mainloop" (event driven program)
@@ -31,24 +32,33 @@ class Tournament:
         # Play a round of BuildUp
         self.Round.PlayRound(self.AskNewRound)
 
-    # Declare two players (1 human, 1 computer)
-    def DeclareTwoPlayers(self):
+    # Declare 1 human, 1 computer
+    def DeclareHuamnComputerGame(self):
 
-        # Initalize 2 players
+        # Initalize 2 human players
         self.Players = []
         self.Players.append(Human('Human'))
         self.Players.append(Computer('Computer'))
 
         # Ask for size of domino set
         self.AskDominoSetSize()
-        
-    # Declare four players (2 human, 2 computer)
-    def DeclareFourPlayers(self):
 
-        # Initalize 4 players
+    # Declare 2 humans
+    def DeclareHumanHumanGame(self):
+
+        # Initalize 2 human players
         self.Players = []
         self.Players.append(Human('Human 1'))
         self.Players.append(Human('Human 2'))
+
+        # Ask for size of domino set
+        self.AskDominoSetSize()
+
+    # Declare 2 computers
+    def DeclareComputerComputerGame(self):
+
+        # Initalize 2 human players
+        self.Players = []
         self.Players.append(Computer('Computer 1'))
         self.Players.append(Computer('Computer 2'))
 

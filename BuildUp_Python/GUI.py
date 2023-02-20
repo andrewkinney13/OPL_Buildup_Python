@@ -17,7 +17,7 @@ class GUI():
         # Initalize window
         self.root = tk.Tk()
         self.root.title("Andrew Kinney's BuildUp Program for OPL")
-        self.root.geometry("1000x600")
+        self.root.geometry("1000x800")
         
 
     # Creates button with default attributes, but custom text and command
@@ -28,20 +28,19 @@ class GUI():
     # Creates label with default attributes, custom text
     def CreateLabel(self, text, frame = None):
 
-        # Create label on window
+        # Create label on window (main menu)
         if (frame == None):
             label = tk.Label(text = text, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont)
             label.pack()
 
-        # Create label on frame
+        # Create label on frame (attribute label)
         else:
-            label = tk.Label(text = text, master = frame, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont)
+            label = tk.Label(text = text, master = frame, width = self.defaultWidth, height = self.defaultHeight - 1, font = self.defaultFont)
             label.pack(side = 'top', fill= 'x')
-        
 
     # Creates entry box with default attributes
     def CreateEntry(self):
-        entry = tk.Entry(width = self.defaultWidth, font = self.defaultFont)
+        entry = tk.Entry(width = self.tileWidth, font = self.defaultFont)
         entry.pack()
         return entry
 
@@ -76,14 +75,6 @@ class GUI():
                                    width = self.tileWidth, height = self.tileHeight, command = function, bg = 'black', fg = 'white')
 
         button.pack(side = 'left')
-        """
-        # Put button in the frame
-        if (tile.color == 'W'):
-            button.pack(side = 'right', fill = 'x')
-
-        else:
-            button.pack(side = 'left', fill = 'x')
-        """
 
     # Creates Tile main frame, holds rows of frames of buttons and labels
     def CreateTileMainFrame(self, side):
