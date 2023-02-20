@@ -22,37 +22,39 @@ class Computer(Player):
         # Print player menu
         self.PlayerMenu() 
 
+        # Logic here for placing tiles
         print("AHHH!")
 
     # Creates frame and label for row of buttons for the player's stack
     def CreateStackFrame(self, player, deck, mainFrame):
         
         # Create subframe 
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
+        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
         # Put player's name in label
         self.GUI.CreateLabel(str(player.name) + "'s stack", subFrame)
 
         # Reinit subframe so buttons are centered (i dont know why we have to do this)
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
+        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
-        # Put tile buttons into subrame
+        # Put tile buttons into subframe
         for tile in range(len(deck.stack)):
-            self.GUI.CreateTileLabel(subFrame, deck.stack[tile])
+            self.GUI.CreateTileLabel(deck.stack[tile], subFrame)
 
     # Creates frame and label for row of labels for the player's hand
     def CreateHandFrame(self, player, deck, mainFrame):
         # Create subframe 
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
+        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
         # Put player's name in label
         self.GUI.CreateLabel(str(player.name) + "'s hand", subFrame)
 
         # Reinit subframe so buttons are centered (i dont know why we have to do this)
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
+        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
-        # Put tile label into subrame
+        # Put tile label into subframe
         for tile in range(len(deck.hand)):
-            self.GUI.CreateTileLabel(subFrame, deck.hand[tile])
+            self.GUI.CreateTileLabel(deck.hand[tile], subFrame)
+
 
  

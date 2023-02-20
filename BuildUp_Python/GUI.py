@@ -20,8 +20,32 @@ class GUI():
         self.root.geometry("1000x800")
 
     # Creates button with default attributes, but custom text and command
-    def CreateButton(self, text, command):
-        button = tk.Button(text = text, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont, command = command)
+    def CreateButton(self, text, command, frame = None, color = None):
+        
+        # No color specified
+        if (color == None):
+
+            # No frame specified
+            if (frame == None):
+                button = tk.Button(text = text, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont, command = command)
+
+            # Frame specified
+            else:
+                button = tk.Button(text = text, master = frame, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont, command = command)
+
+        # Color specified
+        else: 
+            # No frame specified
+            if (frame == None):
+                button = tk.Button(text = text, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont, command = command, 
+                                   bg = color, fg = "white")
+
+            # Frame specified
+            else:
+                button = tk.Button(text = text, master = frame, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont, command = command, 
+                                   bg = color, fg = "white")
+
+        # Pack the button
         button.pack()
 
     # Creates label with default attributes, custom text
@@ -54,7 +78,7 @@ class GUI():
 
 
     # Creates Tile button (pickable / placeable tile)
-    def CreateTileButton(self, frame, tile, function, highlighted = False):
+    def CreateTileButton(self, tile, function, frame, highlighted = False):
         # Highlighted
         if (highlighted):
             button = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
@@ -76,7 +100,7 @@ class GUI():
         button.pack(side = 'left')
 
     # Creates Tile label (non-pickable / placeable tile)
-    def CreateTileLabel(self, frame, tile, highlighted = False):
+    def CreateTileLabel(self, tile, frame, highlighted = False):
         # Highlighted
         if (highlighted):
             label = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
@@ -98,7 +122,7 @@ class GUI():
         label.pack(side = 'left')
 
     # Creates Tile main frame, holds rows of frames of buttons and labels
-    def CreateTileMainFrame(self, side):
+    def CreatePlayerMainFrame(self, side):
 
         # Create frame
         frame = tk.Frame(self.root)
@@ -107,7 +131,7 @@ class GUI():
         return frame
 
     # Creates subframe within mainframe
-    def CreateTileSubFrame(self, mainFrame):
+    def CreateAttributeSubFrame(self, mainFrame):
 
         # Create subframe in mainFrame
         subFrame = tk.Frame(mainFrame)

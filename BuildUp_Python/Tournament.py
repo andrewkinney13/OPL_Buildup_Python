@@ -27,7 +27,7 @@ class Tournament:
     def PlayTournament(self):
         
         # Initalize Round object with players
-        self.Round = Round(self.GUI, self.Players, self.Decks)
+        self.Round = Round(self.GUI, self.Players, self.Decks, self.SaveGame)
 
         # Play a round of BuildUp
         self.Round.PlayRound(self.AskNewRound)
@@ -72,6 +72,11 @@ class Tournament:
 
         # Play Tournament
         self.PlayTournament()
+
+    # Save the game to text file
+    def SaveGame(self):
+        print("HERE!")
+        exit()
 
     # Ask user what size domino set to play with
     def AskDominoSetSize(self):

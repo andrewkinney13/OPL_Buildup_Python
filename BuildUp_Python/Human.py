@@ -28,31 +28,42 @@ class Human(Player):
     def CreateStackFrame(self, player, deck, mainFrame):
         
         # Create subframe 
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
+        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
         # Put player's name in label
         self.GUI.CreateLabel(str(player.name) + "'s stack", subFrame)
 
         # Reinit subframe so buttons are centered (i dont know why we have to do this)
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
+        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
-        # Put tile buttons into subrame
+        # Put tile buttons into subframe
         for tile in range(len(deck.stack)):
-            self.GUI.CreateTileButton(subFrame, deck.stack[tile], self.SelectTile)
+            self.GUI.CreateTileButton(deck.stack[tile], self.SelectTile, subFrame)
 
     # Creates frame and label for row of buttons for the player's hand
     def CreateHandFrame(self, player, deck, mainFrame):
         # Create subframe 
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
+        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
         # Put player's name in label
         self.GUI.CreateLabel(str(player.name) + "'s hand", subFrame)
 
         # Reinit subframe so buttons are centered (i dont know why we have to do this)
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
+        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
-        # Put tile buttons into subrame
+        # Put tile buttons into subframe
         for tile in range(len(deck.hand)):
-            self.GUI.CreateTileButton(subFrame, deck.hand[tile], self.SelectTile)
+            self.GUI.CreateTileButton(deck.hand[tile], self.SelectTile, subFrame)
+
+
+    # Selects the tile to try and place
+    def SelectTile(self):
+        self.PlaceTile()
+
+    # Attempts to place the tile, if unsuccessful, re-calls TurnChoice
+    def PlaceTile(self):
+        self.GUI.ClearWindow()
+        self.GUI.CreateLabel("Tile placed!")
+        self.CreateContinueButton()
 
     

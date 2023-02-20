@@ -4,7 +4,7 @@ from GUI import GUI
 
 class Round:
     # Constructor
-    def __init__(self, GUI, Players, Decks):
+    def __init__(self, GUI, Players, Decks, SaveGameFunc):
         # Initalize data members 
         self.GUI = GUI
         self.Players = Players
@@ -14,13 +14,13 @@ class Round:
 
         # Initalize player's data
         for playerNum in range(2):
-            self.Players[playerNum].InitalizeRoundData(self.GUI, self.ChangeTurns, self.PlayHand)
+            self.Players[playerNum].InitalizeRoundData(self.GUI, self.ChangeTurns, self.PlayHand, SaveGameFunc)
 
     # Plays round
-    def PlayRound(self, retFunc):
+    def PlayRound(self, AskNewRoundFunc):
         
-        # Set return function
-        self.retFunc = retFunc
+        # Set return functions
+        self.AskNewRoundFunc = AskNewRoundFunc
 
         # Initalize decks
         self.InitalizeDecks()
@@ -41,7 +41,7 @@ class Round:
            self.GUI.ClearWindow()
            self.GUI.CreateLabel("Round Over!")
            self.GUI.ClearStacks()
-           self.GUI.CreateButton("Continue", retFunc)
+           self.GUI.CreateButton("Continue", AskNewRoundFunc)
 
         """
         # If hand not created, round is over
