@@ -18,7 +18,6 @@ class GUI():
         self.root = tk.Tk()
         self.root.title("Andrew Kinney's BuildUp Program for OPL")
         self.root.geometry("1000x800")
-        
 
     # Creates button with default attributes, but custom text and command
     def CreateButton(self, text, command):
@@ -54,7 +53,7 @@ class GUI():
         self.root.mainloop()
 
 
-    # Creates Tile button (placeable tile)
+    # Creates Tile button (pickable / placeable tile)
     def CreateTileButton(self, frame, tile, function, highlighted = False):
         # Highlighted
         if (highlighted):
@@ -75,6 +74,28 @@ class GUI():
                                    width = self.tileWidth, height = self.tileHeight, command = function, bg = 'black', fg = 'white')
 
         button.pack(side = 'left')
+
+    # Creates Tile label (non-pickable / placeable tile)
+    def CreateTileLabel(self, frame, tile, highlighted = False):
+        # Highlighted
+        if (highlighted):
+            label = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
+                               width = self.tileWidth, height = self.tileHeight, bg = 'yellow')
+
+        # Regular color
+        else:
+
+            # White
+            if (tile.color == 'W'):
+                label = tk.Button(master = frame, text = tile.GetStringForm(),  font = self.tileFont, \
+                                   width = self.tileWidth, height = self.tileHeight)
+
+            # Black
+            else:
+                label = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
+                                   width = self.tileWidth, height = self.tileHeight, bg = 'black', fg = 'white')
+
+        label.pack(side = 'left')
 
     # Creates Tile main frame, holds rows of frames of buttons and labels
     def CreateTileMainFrame(self, side):

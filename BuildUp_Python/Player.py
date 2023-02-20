@@ -14,15 +14,10 @@ class Player:
         return True
 
     # Sets functions to run after a turn
-    def InitalizeRoundData(self, GUI, changeTurnFunction, returnToHandFunction):
+    def InitalizeRoundData(self, GUI, ChangeTurnFunction, ReturnToHandFunction):
         self.GUI = GUI
-        self.changeTurnFunction = changeTurnFunction
-        self.returnToHandFunction = returnToHandFunction
-
-    # Runs after turn functons
-    def AfterTurnFunctions(self):
-        self.changeTurnFunction()
-        self.returnToHandFunction()
+        self.ChangeTurnFunction = ChangeTurnFunction
+        self.ReturnToHandFunction = ReturnToHandFunction
 
     # Prints menu for the current turn
     def PlayerMenu(self):
@@ -39,36 +34,16 @@ class Player:
         self.CreateSubFrame(0, leftMainFrame)
         self.CreateSubFrame(1, rightMainFrame)
 
-    # Creates frames a label and frames of buttons for the player's stack
-    def CreateStackFrame(self, player, deck, mainFrame):
-        
-        # Create subframe 
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
+        # Create continue or save buttons
+        self.CreateContinueButton()
 
-        # Put player's name in label
-        self.GUI.CreateLabel(str(player.name) + "'s stack", subFrame)
+    # Creates the data for a player and their attributes 
+    def CreateSubFrame(self, playerNum, mainFrame):
+        self.CreateStackFrame(self.turnPlayers[playerNum], self.turnDecks[playerNum], mainFrame)
+        self.CreateHandFrame(self.turnPlayers[playerNum], self.turnDecks[playerNum], mainFrame)
+        self.CreateBoneyardFrame(self.turnPlayers[playerNum], self.turnDecks[playerNum], mainFrame)
 
-        # Reinit subframe so buttons are centered (i dont know why we have to do this)
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
-
-        # Put tile buttons into subrame
-        for tile in range(len(deck.stack)):
-            self.GUI.CreateTileButton(subFrame, deck.stack[tile], self.SelectTile)
-
-    def CreateHandFrame(self, player, deck, mainFrame):
-        # Create subframe 
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
-
-        # Put player's name in label
-        self.GUI.CreateLabel(str(player.name) + "'s hand", subFrame)
-
-        # Reinit subframe so buttons are centered (i dont know why we have to do this)
-        subFrame = self.GUI.CreateTileSubFrame(mainFrame)
-
-        # Put tile buttons into subrame
-        for tile in range(len(deck.hand)):
-            self.GUI.CreateTileButton(subFrame, deck.hand[tile], self.SelectTile)
-
+    # Creates frame and label for row of labels for the player's hand
     def CreateBoneyardFrame(self, player, deck, mainFrame):
         # Create subframe 
         subFrame = self.GUI.CreateTileSubFrame(mainFrame)
@@ -90,13 +65,7 @@ class Player:
 
             count += 1
 
-            self.GUI.CreateTileButton(subFrame, deck.boneyard[tile], self.SelectTile)
-
-    # Creates the data for a player and their attributes 
-    def CreateSubFrame(self, playerNum, mainFrame):
-        self.CreateStackFrame(self.turnPlayers[playerNum], self.turnDecks[playerNum], mainFrame)
-        self.CreateHandFrame(self.turnPlayers[playerNum], self.turnDecks[playerNum], mainFrame)
-        self.CreateBoneyardFrame(self.turnPlayers[playerNum], self.turnDecks[playerNum], mainFrame)
+            self.GUI.CreateTileLabel(subFrame, deck.boneyard[tile])
 
     # Selects the tile to try and place
     def SelectTile(self):
@@ -106,4 +75,13 @@ class Player:
     def PlaceTile(self):
         self.GUI.ClearWindow()
         self.GUI.CreateLabel("Tile placed!")
+        self.CreateContinueButton()
+
+    # Runs after turn functons
+    def AfterTurnFunctions(self):
+        self.ChangeTurnFunction()
+        self.ReturnToHandFunction()
+
+    # Continue button w/ after turn functionality
+    def CreateContinueButton(self):
         self.GUI.CreateButton("Continue", self.AfterTurnFunctions)
