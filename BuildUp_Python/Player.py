@@ -47,18 +47,28 @@ class Player:
 
     # Creates the data for a player and their attributes 
     def CreateSubFrames(self, playerNum, mainFrame):
-        self.CreateStackFrame(self.turnPlayers[playerNum], self.turnDecks[playerNum], mainFrame)
-        self.CreateHandFrame(self.turnPlayers[playerNum], self.turnDecks[playerNum], mainFrame)
-        self.CreateBoneyardFrame(self.turnPlayers[playerNum], self.turnDecks[playerNum], mainFrame)
+        self.CreateNameFrame(self.turnPlayers[playerNum], mainFrame)
+        self.CreateStackFrame(self.turnDecks[playerNum], mainFrame)
+        self.CreateHandFrame(self.turnDecks[playerNum], mainFrame)
+        self.CreateBoneyardFrame(self.turnDecks[playerNum], mainFrame)
         self.CreateRestAttributesFrame(self.turnPlayers[playerNum], mainFrame)
 
+
+    # Creates a title frame for the player's attributes
+    def CreateNameFrame(self, player, mainFrame):
+        # Create subframe
+        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
+
+        # Put player's name in label
+        self.GUI.CreateLabel(str(player.name) + "'s Data", subFrame)
+
     # Creates frame and label for row of labels for the player's hand
-    def CreateBoneyardFrame(self, player, deck, mainFrame):
+    def CreateBoneyardFrame(self, deck, mainFrame):
         # Create subframe 
         subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
         # Put player's name in label
-        self.GUI.CreateLabel(str(player.name) + "'s boneyard", subFrame)
+        self.GUI.CreateLabel("Boneyard", subFrame)
 
         # Reinit subframe so buttons are centered (i dont know why we have to do this)
         subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
@@ -67,13 +77,14 @@ class Player:
         count = 0
         for tile in range(len(deck.boneyard)):
             
-            # No more than 8 boneyard tiles on subframe, reset if > 8 tiles on subframe
-            if (count == 8):
+            # Keep track of how many tiles placed, make it so only 2 rows are made of boneyard tiles
+            if (count > len(deck.boneyard) / 5):
                 subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
                 count = 0
 
             count += 1
 
+            # Create the tile
             self.GUI.CreateTileLabel(deck.boneyard[tile], subFrame)
 
     # Creates labels for rest of the player's attributes, like score and rounds won

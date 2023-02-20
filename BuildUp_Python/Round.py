@@ -40,8 +40,8 @@ class Round:
            # let em' know and return to tournament 
            self.GUI.ClearWindow()
            self.GUI.CreateLabel("Round Over!")
-           self.GUI.ClearStacks()
-           self.GUI.CreateButton("Continue", AskNewRoundFunc)
+           self.ClearStacks()
+           self.GUI.CreateButton("Continue", AskNewRoundFunc, color = "green")
 
         """
         # If hand not created, round is over
@@ -81,7 +81,7 @@ class Round:
             # Alert the user
             self.GUI.ClearWindow()
             self.GUI.CreateLabel("Hand Over!")
-            self.GUI.CreateButton("Continue", lambda: (self.PlayRound(self.retFunc)))
+            self.GUI.CreateButton("Continue", lambda: (self.PlayRound(self.AskNewRoundFunc)), color = "Green")
 
     # See if playable tiles are left in any player's hand
     def PlayableTilesRemain(self):

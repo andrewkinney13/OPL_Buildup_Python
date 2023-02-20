@@ -17,7 +17,7 @@ class GUI():
         # Initalize window
         self.root = tk.Tk()
         self.root.title("Andrew Kinney's BuildUp Program for OPL")
-        self.root.geometry("1000x800")
+        self.root.geometry("1000x1000")
 
     # Creates button with default attributes, but custom text and command
     def CreateButton(self, text, command, frame = None, color = None):

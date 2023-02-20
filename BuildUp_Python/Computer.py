@@ -26,13 +26,13 @@ class Computer(Player):
         print("AHHH!")
 
     # Creates frame and label for row of buttons for the player's stack
-    def CreateStackFrame(self, player, deck, mainFrame):
+    def CreateStackFrame(self, deck, mainFrame):
         
         # Create subframe 
         subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
         # Put player's name in label
-        self.GUI.CreateLabel(str(player.name) + "'s stack", subFrame)
+        self.GUI.CreateLabel("Stack", subFrame)
 
         # Reinit subframe so buttons are centered (i dont know why we have to do this)
         subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
@@ -42,12 +42,12 @@ class Computer(Player):
             self.GUI.CreateTileLabel(deck.stack[tile], subFrame)
 
     # Creates frame and label for row of labels for the player's hand
-    def CreateHandFrame(self, player, deck, mainFrame):
+    def CreateHandFrame(self, deck, mainFrame):
         # Create subframe 
         subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
 
         # Put player's name in label
-        self.GUI.CreateLabel(str(player.name) + "'s hand", subFrame)
+        self.GUI.CreateLabel("Hand", subFrame)
 
         # Reinit subframe so buttons are centered (i dont know why we have to do this)
         subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)

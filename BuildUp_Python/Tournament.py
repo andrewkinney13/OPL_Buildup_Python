@@ -105,8 +105,8 @@ class Tournament:
 
         # Ask the user
         self.GUI.CreateLabel("Round over, play another round?")
-        self.GUI.CreateButton("yes", self.PlayTournament)
-        self.GUI.CreateButton("no", self.FinalScreen)
+        self.GUI.CreateButton("yes", self.PlayTournament, color = "green")
+        self.GUI.CreateButton("no", self.FinalScreen, color = "red")
 
     # Show final screen with who won and stuff
     def FinalScreen(self):
@@ -115,5 +115,5 @@ class Tournament:
 
         # Print goodbye 
         self.GUI.CreateLabel("Tournament over!")
-        self.GUI.CreateButton("exit", exit)
+        self.GUI.CreateButton("exit", exit, color = "red")
 
