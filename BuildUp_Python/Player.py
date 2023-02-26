@@ -9,110 +9,38 @@ class Player:
         self.roundsWon = 0
         self.isTheirTurn = False
 
-    # Sets functions to run after a turn
-    def InitalizeRoundData(self, GUI, ChangeTurnFunction, ReturnToHandFunction, SaveGameFunc):
-        self.GUI = GUI
-        self.ChangeTurnFunction = ChangeTurnFunction
-        self.ReturnToHandFunction = ReturnToHandFunction
-        self.SaveGameFunc = SaveGameFunc
+        self.selectingHandTile = False
+        self.placingOnStackTile = False
         
-    # Runs after turn functons
-    def AfterTurnFunctions(self):
-        self.ChangeTurnFunction()
-        self.ReturnToHandFunction()
-
-    # Prints menu for the current turn
-    def PlayerMenu(self):
-
-        # Clear the GUI and print heading
-        self.GUI.ClearWindow()
-        self.GUI.CreateLabel("It's " + str(self.name) + "'s turn...")
-
-        # Create mainframes to hold human and computer attributes
-        leftMainFrame = self.GUI.CreatePlayerMainFrame('left')
-        rightMainFrame = self.GUI.CreatePlayerMainFrame('right')
-
-        # Create subframes for each player, with their attributes
-        self.CreateSubFrames(0, leftMainFrame)
-        self.CreateSubFrames(1, rightMainFrame)
-
-        # Creates a button for continue or save, if it's the player's turn (only one button)
-        if (self.isTheirTurn):
-            self.CreateSaveButton(rightMainFrame)
-
-            # Only continue option if computer player
-            if(self.color == 'W'):
-                self.CreateContinueButton(leftMainFrame)
-            
-
-    # Creates the data for a player and their attributes 
-    def CreateSubFrames(self, playerNum, mainFrame):
-        self.CreateNameFrame(self.turnPlayers[playerNum], mainFrame)
-        self.CreateStackFrame(self.turnDecks[playerNum], mainFrame)
-        self.CreateHandFrame(self.turnDecks[playerNum], mainFrame)
-        self.CreateBoneyardFrame(self.turnDecks[playerNum], mainFrame)
-        self.CreateRestAttributesFrame(self.turnPlayers[playerNum], mainFrame)
-
-
-    # Creates a title frame for the player's attributes
-    def CreateNameFrame(self, player, mainFrame):
-        # Create subframe
-        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
-
-        # Put player's name in label
-        self.GUI.CreateLabel(str(player.name) + "'s Data", subFrame)
-
-    # Creates frame and label for row of labels for the player's hand
-    def CreateBoneyardFrame(self, deck, mainFrame):
-        # Create subframe 
-        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
-
-        # Put player's name in label
-        self.GUI.CreateLabel("Boneyard", subFrame)
-
-        # Reinit subframe so buttons are centered (i dont know why we have to do this)
-        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
-
-        # Put tile buttons into subrame
-        count = 0
-        for tile in range(len(deck.boneyard)):
-            
-            # Keep track of how many tiles placed, make it so only 2 rows are made of boneyard tiles
-            if (count > len(deck.boneyard) / 5):
-                subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
-                count = 0
-
-            count += 1
-
-            # Create the tile
-            self.GUI.CreateTileLabel(deck.boneyard[tile], subFrame)
-
-    # Creates labels for rest of the player's attributes, like score and rounds won
-    def CreateRestAttributesFrame(self, player, mainFrame):
-        # Create subframe
-        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
-
-        # Put player's attributes name label
-        self.GUI.CreateLabel("Score: " + str(player.score), subFrame)
-        self.GUI.CreateLabel("Rounds won: " + str(player.roundsWon), subFrame)
+        self.TileToPlace = Tile()
+        self.TileToPlaceOn = Tile()
+        self.CreateTurnMenu = None
 
     # Checks if player has playable tiles
     def HasPlayableTiles(self):
         return True
 
-     # Creates a button that exits the program and saves the game to a text file
-    def CreateSaveButton(self, mainFrame):
-        self.GUI.CreateButton("Save and Exit", self.SaveGameFunc, mainFrame, color = "red")
+    # Sets their turn, and relevent booleans 
+    def SetTheirTurn(self, theirTurn):
+        if(theirTurn):
+            self.isTheirTurn = True
+            self.selectingHandTile = True
+            self.placingOnStackTile = True
 
-    # Creates a button to continue to next turn
-    def CreateContinueButton(self, mainFrame = None):
-
-        # No frame specified
-        if (mainFrame == None):
-            self.GUI.CreateButton("Continue", self.AfterTurnFunctions, color = "green")
-
-        # Frame specified
         else:
-            self.GUI.CreateButton("Continue", self.AfterTurnFunctions, mainFrame, color = "green")
+            self.isTheirTurn = False
+            self.selectingHandTile = False
+            self.placingOnStackTile = False
 
-    
+    # Returns whether or not the player has remaining moves
+    def HasRemainingMoves(self):
+        if (self.selectingHandTile or self.placingOnStackTile):
+            return True
+        else:
+            return False
+
+
+    # Place tile onto stack
+    def PlaceTileOnStack(self):
+
+        self.placingOnStackTile = False

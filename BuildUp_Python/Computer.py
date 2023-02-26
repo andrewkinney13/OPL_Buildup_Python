@@ -8,53 +8,23 @@ class Computer(Player):
         self.color = 'W'
         self.name = name
 
+        self.SelectionPrompt = "Computer to select hand tile..."
+        self.PlacementPrompt = "Computer to place hand tile on stack..."
+
         # Call base class constructor
         super().__init__()
 
-     # For when in a hand, choosing where to place tile
-    def TurnChoice(self, Players, Decks, playerNum):
-        
-        # Initalize current turn attributes
-        self.turnDecks = Decks
-        self.turnPlayers = Players
-        self.playerNum = playerNum
+ # Select tile from hand to play
+    def SelectHandTile(self, ownHand, ownStack, opponentStack):
 
-        # Print player menu
-        self.PlayerMenu() 
+        # Logic would go here for what tile from hand to place and where 
+        self.TileToPlace = ownHand[0]
+        self.TileToPlaceOn = opponentStack[0]
 
-        # Logic here for placing tiles
-        print("AHHH!")
+        self.selectingHandTile = False
 
-    # Creates frame and label for row of buttons for the player's stack
-    def CreateStackFrame(self, deck, mainFrame):
-        
-        # Create subframe 
-        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
-
-        # Put player's name in label
-        self.GUI.CreateLabel("Stack", subFrame)
-
-        # Reinit subframe so buttons are centered (i dont know why we have to do this)
-        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
-
-        # Put tile buttons into subframe
-        for tile in range(len(deck.stack)):
-            self.GUI.CreateTileLabel(deck.stack[tile], subFrame)
-
-    # Creates frame and label for row of labels for the player's hand
-    def CreateHandFrame(self, deck, mainFrame):
-        # Create subframe 
-        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
-
-        # Put player's name in label
-        self.GUI.CreateLabel("Hand", subFrame)
-
-        # Reinit subframe so buttons are centered (i dont know why we have to do this)
-        subFrame = self.GUI.CreateAttributeSubFrame(mainFrame)
-
-        # Put tile label into subframe
-        for tile in range(len(deck.hand)):
-            self.GUI.CreateTileLabel(deck.hand[tile], subFrame)
+        self.CreateTurnMenu()
 
 
- 
+
+    

@@ -17,7 +17,7 @@ class GUI():
         # Initalize window
         self.root = tk.Tk()
         self.root.title("Andrew Kinney's BuildUp Program for OPL")
-        self.root.geometry("1000x1000")
+        self.root.geometry("1000x900")
 
     # Creates button with default attributes, but custom text and command
     def CreateButton(self, text, command, frame = None, color = None):
@@ -78,24 +78,17 @@ class GUI():
 
 
     # Creates Tile button (pickable / placeable tile)
-    def CreateTileButton(self, tile, function, frame, highlighted = False):
-        # Highlighted
-        if (highlighted):
-            button = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
-                               width = self.tileWidth, height = self.tileHeight, command = function, bg = 'yellow')
+    def CreateTileButton(self, tile, function, frame):
 
-        # Regular color
+        # White
+        if (tile.color == 'W'):
+            button = tk.Button(master = frame, text = tile.GetStringForm(),  font = self.tileFont, \
+                                width = self.tileWidth, height = self.tileHeight, command = lambda: (function(tile)))
+
+        # Black
         else:
-
-            # White
-            if (tile.color == 'W'):
-                button = tk.Button(master = frame, text = tile.GetStringForm(),  font = self.tileFont, \
-                                   width = self.tileWidth, height = self.tileHeight, command = function)
-
-            # Black
-            else:
-                button = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
-                                   width = self.tileWidth, height = self.tileHeight, command = function, bg = 'black', fg = 'white')
+            button = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
+                                width = self.tileWidth, height = self.tileHeight, command = lambda: (function(tile)), bg = 'black', fg = 'white')
 
         button.pack(side = 'left')
 

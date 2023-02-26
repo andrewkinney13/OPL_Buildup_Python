@@ -1,11 +1,12 @@
 
 class Tile:
 
-    # Constructor 
-    def __init__(self, color, sideOnePips, sideTwoPips):
+    # Constructor
+    def __init__(self, color = 'E', sideOnePips = 999, sideTwoPips = 999):
         self.color = color
         self.sideOnePips = sideOnePips
         self.sideTwoPips = sideTwoPips
+        self.highlighted = False
         
     # Returns if tile is a doulbe
     def IsDouble(self):
@@ -46,6 +47,13 @@ class Tile:
             else:
                 return self.sideOnePips > other.sideOnePips
 
+    def __eq__(self, other):
+        # everything is the same
+        if (self.color == other.color and self.sideOnePips == other.sideOnePips and self.sideTwoPips == other.sideTwoPips):
+            return True
+
+        # they're not equal
+        return False
 
 
 

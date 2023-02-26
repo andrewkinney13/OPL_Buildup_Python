@@ -75,7 +75,6 @@ class Tournament:
 
     # Save the game to text file
     def SaveGame(self):
-        print("HERE!")
         exit()
 
     # Ask user what size domino set to play with
