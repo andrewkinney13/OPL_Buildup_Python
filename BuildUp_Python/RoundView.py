@@ -27,7 +27,6 @@ class RoundView:
 
         # Alert player score changes 
         self.GUI.CreateMenuLabel(scoreMsg)
-        self.GUI.CreateMenuLabel(str(winnerNum) + " won the round!")
 
         # Create continue button 
         self.GUI.CreateMenuButton("Continue", PlayHand, fg = "white", bg = "green")

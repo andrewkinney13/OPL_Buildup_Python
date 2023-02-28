@@ -110,7 +110,7 @@ class Round:
             self.ClearHands()
 
             # Create a screen for user to see the new scores and play next hand
-            self.RoundView.EndOfRoundScreen(scoresMsg, self.PlayHand)
+            self.RoundView.EndOfHandScreen(scoresMsg, self.PlayHand)
 
 
     # See if playable tiles are left in any player's hand
