@@ -24,8 +24,8 @@ class HumanView:
             self.GUI.CreateMenuLabel(str(Players[playerNum].name) + "'s turn over...\nBoard after your move")
 
         # Create frames for each player's attributes
-        playerMainFrame = self.GUI.CreateMainFrame(Players[playerNum].side)
-        opponentMainFrame = self.GUI.CreateMainFrame(Players[opponentNum].side)
+        playerMainFrame = self.GUI.CreateMainFrame("left")
+        opponentMainFrame = self.GUI.CreateMainFrame("right")
 
         # Create subframes and labels for player's names
         self.CreateNameFrames(playerMainFrame, Players[playerNum].name)
@@ -43,22 +43,11 @@ class HumanView:
         self.CreatePlayerAttributeFrames(opponentMainFrame, Players[opponentNum])
 
         # Create a save and exit button on the right side of the screen
-        if (Players[playerNum].side == "right"):
-            self.GUI.CreateSaveExitButton(playerMainFrame)
-
-        else:
-            self.GUI.CreateSaveExitButton(opponentMainFrame)
+        self.GUI.CreateSaveExitButton(opponentMainFrame)
 
         # Create a continue button if the moves have been made
         if(not Players[playerNum].selectingHandTile and not Players[playerNum].placingOnStackTile):
-
-            # Create it on the left side of the screen
-            if (Players[playerNum].side == "left"):
-                self.GUI.CreateFrameMenuButton("Continue", TileFunction, playerMainFrame, fg = "white", bg = "green")
-
-            else:
-                self.GUI.CreateFrameMenuButton("Continue", TileFunction, opponentMainFrame, fg = "white", bg = "green")
-
+            self.GUI.CreateFrameMenuButton("Continue", TileFunction, playerMainFrame, fg = "white", bg = "green")
 
     # Creates subframes and labels for players names
     def CreateNameFrames(self, mainFrame, name):

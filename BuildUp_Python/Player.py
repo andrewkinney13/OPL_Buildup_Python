@@ -1,25 +1,25 @@
 
+from tkinter.font import names
 from Tile import Tile
 from Deck import Deck
 
 class Player:
     # Constructor
-    def __init__(self):
+    def __init__(self, name, color):
+
+        # Regular attributes
+        self.name = name
+        self.color = color
         self.score = 0
         self.roundsWon = 0
-        self.isTheirTurn = False
 
+        # Turn attributes
+        self.isTheirTurn = False
         self.selectingHandTile = False
         self.placingOnStackTile = False
-        
         self.tileToPlace = Tile()
         self.tileToPlaceOn = Tile()
-
         self.PlayHandFunction = None
-
-    # Checks if player has playable tiles
-    def HasPlayableTiles(self):
-        return True
 
     # Sets their turn, and relevent booleans 
     def SetTheirTurn(self, theirTurn):
@@ -32,13 +32,6 @@ class Player:
             self.isTheirTurn = False
             self.selectingHandTile = False
             self.placingOnStackTile = False
-
-    # Returns whether or not the player has remaining moves
-    def HasRemainingMoves(self):
-        if (self.selectingHandTile or self.placingOnStackTile):
-            return True
-        else:
-            return False
        
     # Assign play round function
     def SetPlayHandFunction(self, PlayHand):

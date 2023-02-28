@@ -44,8 +44,8 @@ class Tournament:
     def DeclareHuamnComputerGame(self):
 
         # Initalize 2 human players
-        self.Players.append(Human('Human', "left", self.GUI))
-        self.Players.append(Computer('Computer', "right", self.GUI))
+        self.Players.append(Human('Human', "B", self.GUI))
+        self.Players.append(Computer('Computer', "W", self.GUI))
 
         # Ask for size of domino set
         self.TournamentView.AskDominoSetSize(self.DeclareDecks)
@@ -54,8 +54,8 @@ class Tournament:
     def DeclareHumanHumanGame(self):
 
         # Initalize 2 human players
-        self.Players.append(Human('Human 1', "left", self.GUI))
-        self.Players.append(Human('Human 2', "right", self.GUI))
+        self.Players.append(Human('Human 1', "B", self.GUI))
+        self.Players.append(Human('Human 2', "W", self.GUI))
 
         # Ask for size of domino set
         self.TournamentView.AskDominoSetSize(self.DeclareDecks)
@@ -64,8 +64,8 @@ class Tournament:
     def DeclareComputerComputerGame(self):
 
         # Initalize 2 human players
-        self.Players.append(Computer('Computer 1', "left", self.GUI))
-        self.Players.append(Computer('Computer 2', "right", self.GUI))
+        self.Players.append(Computer('Computer 1', "B", self.GUI))
+        self.Players.append(Computer('Computer 2', "W", self.GUI))
 
         # Ask for size of domino set
         self.TournamentView.AskDominoSetSize(self.DeclareDecks)

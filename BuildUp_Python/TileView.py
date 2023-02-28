@@ -8,7 +8,7 @@ class TileView:
         self.GUI = GUI
 
         # Default attributes of tiles
-        self.tileWidth = 7
+        self.tileWidth = 4
         self.tileHeight = 1
         self.tileFont = ("Comic Sans MS", 14)
 
@@ -18,12 +18,12 @@ class TileView:
         # White
         if (tile.color == 'W'):
             button = tk.Button(master = frame, text = tile.GetStringForm(),  font = self.tileFont, \
-                                width = self.tileWidth, height = self.tileHeight, command = lambda: (function(tile)))
+                                width = self.tileWidth, height = self.tileHeight, command = lambda: (function(tile)), bg = 'white', fg = 'green')
 
         # Black
         else:
             button = tk.Button(master = frame, text = tile.GetStringForm(), font = self.tileFont, \
-                                width = self.tileWidth, height = self.tileHeight, command = lambda: (function(tile)), bg = 'black', fg = 'white')
+                                width = self.tileWidth, height = self.tileHeight, command = lambda: (function(tile)), bg = 'black', fg = 'green')
 
         button.pack(side = 'left')
 

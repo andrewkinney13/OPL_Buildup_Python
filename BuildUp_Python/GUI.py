@@ -12,7 +12,7 @@ class GUI():
         # Initalize window
         self.root = tk.Tk()
         self.root.title("Andrew Kinney's BuildUp Program for OPL")
-        self.root.geometry("1400x900")
+        self.root.geometry("900x900")
 
     # Starts input-driven window
     def StartInputLoop(self):

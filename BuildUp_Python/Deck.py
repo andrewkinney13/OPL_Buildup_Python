@@ -12,7 +12,7 @@ class Deck:
         self.maxTilePips = tileSetSize
 
     # Create shuffled boneyard
-    def CreateBoneyard(self, color, playerNum):
+    def CreateBoneyard(self, color):
 
         # Create boneyard
             # 0 to domino set size
@@ -20,7 +20,7 @@ class Deck:
 
             # sideOneVal to domino set size (so no duplicates)
             for pipSideTwoVal in range(pipSideOneVal, self.maxTilePips + 1):
-                self.boneyard.append(Tile(color, pipSideOneVal, pipSideTwoVal, playerNum))
+                self.boneyard.append(Tile(color, pipSideOneVal, pipSideTwoVal))
 
         # Shuffle the list
         random.shuffle(self.boneyard)
@@ -93,14 +93,14 @@ class Deck:
     # Reset stack tile status
     def ResetStackTileStatus(self):
         for tile in range(len(self.stack)):
-            self.stack[tile].stackPlaceable = False
+            self.stack[tile].stackPlacable = False
 
     # Reset status of all tiles
-    def ResetTileStatus(self):
+    def ResetHighlightedTileStatus(self):
 
-        # Reset placability statuc
-        self.ResetHandTileStatus()
-        self.ResetStackTileStatus()
+        # Reset the highlighted hand tile
+        for tile in range(len(self.hand)):
+            self.hand[tile].highlighted = False
 
         # Reset the highlighted stack tile
         for tile in range(len(self.stack)):
@@ -121,3 +121,21 @@ class Deck:
                 self.hand[tileNum].highlighted = True
                 return
 
+    # Checks if any tiles in the hand are playable 
+    def HasPlayableTiles(self, stackOne, stackTwo):
+        
+        # Go through every hand tile
+        for handTile in range(len(self.hand)):
+
+            # Check in first stack
+            for stackTile in range(len(stackOne)):
+                if self.hand[handTile] > stackOne[stackTile]:
+                    return True
+
+            # Check in second stack
+            for stackTile in range(len(stackTwo)):
+                if self.hand[handTile] > stackTwo[stackTile]:
+                    return True
+
+        # There is no placeable tile
+        return False

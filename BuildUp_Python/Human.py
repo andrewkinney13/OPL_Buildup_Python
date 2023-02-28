@@ -5,15 +5,13 @@ from HumanView import HumanView
 class Human(Player):
     
     # Constructor
-    def __init__(self, name, side, GUI):
-        self.color = 'B'
-        self.name = name
-        self.side = side
+    def __init__(self, name, color, GUI):
+     
         self.GUI = GUI
         self.HumanView = HumanView(GUI)
 
         # Call base class constructor
-        super().__init__()
+        super().__init__(name, color)
 
    # Select tile from hand
     def SelectHandTile(self, Players, Decks, playerNum, opponentNum):

@@ -30,9 +30,8 @@ class Round:
         self.SetFirstTurn()
 
         # If hand successfully created (boneyard tiles remain), play a hand
-        if (len(self.Decks[0].hand) != 0 or self.count2 >= 0):
+        if (len(self.Decks[0].hand)):
             self.count1 -= 1
-            self.count2 = 8
             self.PlayHand()
 
         # This is just for testing, but would be the case if a round ends
@@ -54,10 +53,10 @@ class Round:
     def PlayHand(self):
 
         # Check if hand is over
-        if (self.PlayableTilesRemain() and self.count2 != 0):
+        if (self.PlayableTilesRemain()):
 
             # If player who has the turn can place tile, let them
-            if (self.Players[self.turnNum].HasPlayableTiles):
+            if (self.Decks[self.turnNum].HasPlayableTiles(self.Decks[0].stack, self.Decks[1].stack)):
                 
                 # Player is selecting from hand to place
                 if(self.Players[self.turnNum].selectingHandTile):
@@ -83,13 +82,11 @@ class Round:
                     self.Players[self.turnNum].DisplayBoard(self.Players, self.Decks, self.turnNum, self.opponentNum, self.PlayHand)
 
                     # Reset the player's tiles' status
-                    self.Decks[self.turnNum].ResetTileStatus()
-                    self.Decks[self.opponentNum].ResetTileStatus()
+                    self.Decks[self.turnNum].ResetHighlightedTileStatus()
+                    self.Decks[self.opponentNum].ResetHighlightedTileStatus()
 
                     # Change turns 
                     self.ChangeTurns()
-
-                self.count2 -= 1
 
             # If they can't skip their turn
             else:
@@ -117,8 +114,8 @@ class Round:
     def PlayableTilesRemain(self):
 
         # Go through each player, if at any point someone can play, return true
-        for playerNum in range(2):
-            if (self.Players[playerNum].HasPlayableTiles()):
+        for deckNum in range(2):
+            if (self.Decks[deckNum].HasPlayableTiles(self.Decks[0].stack, self.Decks[1].stack)):
                 return True
 
         # No one has a playable tile
@@ -216,7 +213,7 @@ class Round:
     # Initalizes all the boneyards
     def InitalizeBoneyards(self):
         for playerNum in range(2):
-            self.Decks[playerNum].CreateBoneyard(self.Players[playerNum].color, playerNum)
+            self.Decks[playerNum].CreateBoneyard(self.Players[playerNum].color)
 
     # Initalizes all the stacks
     def InitalizeStacks(self):
