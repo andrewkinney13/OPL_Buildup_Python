@@ -18,7 +18,6 @@ class Round:
         self.turnNum = 999
         self.opponentNum = 999
         self.count1 = 99
-        self.count2 = 99
 
     # Plays round
     def PlayRound(self):
@@ -193,6 +192,10 @@ class Round:
 
     # Add up the scores at the end of a hand
     def AddUpScores(self):
+
+
+
+
         return "haha"
 
     # Clear the remaining tiles in hand
