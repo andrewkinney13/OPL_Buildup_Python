@@ -1,0 +1,7 @@
+
+class ComputerView:
+    pass
+
+
+
+

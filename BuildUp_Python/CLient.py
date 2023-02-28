@@ -8,3 +8,5 @@ myGUI = GUI()
 # Initalize tournament object
 myTournament = Tournament(myGUI)
 
+# Start tournament
+myTournament.StartTournament()

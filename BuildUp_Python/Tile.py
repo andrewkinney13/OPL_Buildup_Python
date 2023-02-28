@@ -2,10 +2,19 @@
 class Tile:
 
     # Constructor
-    def __init__(self, color = 'E', sideOnePips = 999, sideTwoPips = 999):
+    def __init__(self, color = 'E', sideOnePips = 999, sideTwoPips = 999, playerNum = 999):
         self.color = color
         self.sideOnePips = sideOnePips
         self.sideTwoPips = sideTwoPips
+
+        # Tile has to know what player it belongs to, two tiles of same number and color can exist on board at once
+        self.playerNum = playerNum
+
+        # Tile's current placability status, in context of a current turn
+        self.handPlacable = False
+        self.stackPlacable = False
+
+        # Tile highlighted if selected by a player
         self.highlighted = False
         
     # Returns if tile is a doulbe
@@ -21,7 +30,7 @@ class Tile:
 
     # Returns string form of the tile
     def GetStringForm(self):
-        return str(self.color) + str(self.sideOnePips) + str(self.sideTwoPips)
+        return str(self.color) + str(self.sideOnePips) + str(self.sideTwoPips) + " (" + str(self.playerNum) + ")"
 
     # Overloaded operators
     def __gt__(self, other):
@@ -49,7 +58,7 @@ class Tile:
 
     def __eq__(self, other):
         # everything is the same
-        if (self.color == other.color and self.sideOnePips == other.sideOnePips and self.sideTwoPips == other.sideTwoPips):
+        if (self.color == other.color and self.sideOnePips == other.sideOnePips and self.sideTwoPips == other.sideTwoPips and self.playerNum == other.playerNum):
             return True
 
         # they're not equal

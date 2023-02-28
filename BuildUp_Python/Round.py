@@ -1,32 +1,27 @@
 
-from GUI import GUI
+from RoundView import RoundView
 from Tile import Tile
 
 class Round:
     # Constructor
-    def __init__(self, GUI, Players, Decks, SaveGameFunc):
-        # Initalize data members 
+    def __init__(self, Players, Decks, GUI):
+        
+        # Initalize View object
         self.GUI = GUI
+        self.RoundView = RoundView(GUI)
+        
+        # Initalize data members 
         self.Players = Players
+        self.Players[0].SetPlayHandFunction(self.PlayHand)
+        self.Players[1].SetPlayHandFunction(self.PlayHand)
         self.Decks = Decks
         self.turnNum = 999
         self.opponentNum = 999
-        self.count1 = 5
-        self.count2 = 8
-
-        self.SaveGameFunc = SaveGameFunc
-
-        # Initalize player's return functions
-        for playerNum in range(2):
-            self.Players[playerNum].CreateTurnMenu = self.CreateTurnMenu
-
-        self.TileToPlace = Tile()
+        self.count1 = 99
+        self.count2 = 99
 
     # Plays round
-    def PlayRound(self, AskNewRoundFunc):
-        
-        # Set return functions
-        self.AskNewRoundFunc = AskNewRoundFunc
+    def PlayRound(self):
 
         # Initalize decks
         self.InitalizeDecks()
@@ -34,29 +29,25 @@ class Round:
         # Set first turn
         self.SetFirstTurn()
 
-        # If hand successfully created, play a round
+        # If hand successfully created (boneyard tiles remain), play a hand
         if (len(self.Decks[0].hand) != 0 or self.count2 >= 0):
             self.count1 -= 1
             self.count2 = 8
             self.PlayHand()
 
-        # This is just for testing
+        # This is just for testing, but would be the case if a round ends
+        # Once scoring properly implemented, change if statement to an else
         if (self.count1 <= 0):
            
-           # let em' know and return to tournament 
-           self.GUI.ClearWindow()
-           self.GUI.CreateLabel("Round Over!")
-           self.ClearStacks()
-           self.GUI.CreateButton("Continue", AskNewRoundFunc, color = "green")
+            # Clear everything
+            self.ClearHands()
+            self.ClearStacks()
 
-        """
-        # If hand not created, round is over
-           else: 
-            self.GUI.ClearWindow()
-            self.GUI.CreateLabel("Round Over!")
-            self.GUI.ClearStacks()
-            self.GUI.CreateButton("Continue", retFunc)
-        """
+            # Determine the winner of the round
+            winnerNum, winnerMsg = self.DetermineWinner()
+
+            # Create a screen asking if user wants to play another hand
+            self.RoundView.AskNewRound(winnerNum, winnerMsg, self.EndTournament, self.PlayRound) 
         
 
     # Play hand of buildup until no playable tiles remain
@@ -65,33 +56,62 @@ class Round:
         # Check if hand is over
         if (self.PlayableTilesRemain() and self.count2 != 0):
 
-            # Cycle through players
-            for playerNum in range(len(self.Players)):
-
-                # If their turn, let them play
-                if (self.Players[playerNum].isTheirTurn and self.Players[playerNum].HasPlayableTiles()):
-
-                    # Create the menu of choices
-                    self.CreateTurnMenu()
-
-                    # Return to mainloop
-                    break
+            # If player who has the turn can place tile, let them
+            if (self.Players[self.turnNum].HasPlayableTiles):
+                
+                # Player is selecting from hand to place
+                if(self.Players[self.turnNum].selectingHandTile):
+                    self.Players[self.turnNum].SelectHandTile(self.Players, self.Decks, self.turnNum, self.opponentNum)
+                   
+                # Player selects the tile on stack to place on 
+                elif(self.Players[self.turnNum].placingOnStackTile):
+                    self.Decks[self.turnNum].HighlightHandTile(self.Players[self.turnNum].tileToPlace)
+                    self.Players[self.turnNum].SelectStackTile(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].tileToPlace)
             
-            self.count2 -= 1
+                # Tile from hand selected, and stack tile to play on selected, end the turn
+                else:
+                    # Find out the position and stack of the tiles
+                    stackNum, stackPosition = self.FindStackLocation(self.Players[self.turnNum].tileToPlaceOn)
+
+                    # Place the tile
+                    self.Decks[stackNum].PlaceTileOnStack(self.Players[self.turnNum].tileToPlace, stackPosition)
+
+                    # Remove tile from player's hand
+                    self.Decks[self.turnNum].RemoveHandTile(self.Players[self.turnNum].tileToPlace)
+
+                    # Display finished board
+                    self.Players[self.turnNum].DisplayBoard(self.Players, self.Decks, self.turnNum, self.opponentNum, self.PlayHand)
+
+                    # Reset the player's tiles' status
+                    self.Decks[self.turnNum].ResetTileStatus()
+                    self.Decks[self.opponentNum].ResetTileStatus()
+
+                    # Change turns 
+                    self.ChangeTurns()
+
+                self.count2 -= 1
+
+            # If they can't skip their turn
+            else:
+
+                # Create a screen to tell the user a turn is being skipped
+                self.TournamentView.SkipTurn(self.turnNum)
+
+                # Change turns 
+                self.ChangeTurns()
 
         # Hand is over
         else:
 
-            # Add up the scores
-            self.AddUpScores()
+            # Add up the scores, get reasoning
+            scoresMsg = self.AddUpScores()
 
             # Clear the remaining tiles in hand
             self.ClearHands()
 
-            # Alert the user
-            self.GUI.ClearWindow()
-            self.GUI.CreateLabel("Hand Over!")
-            self.GUI.CreateButton("Continue", lambda: (self.PlayRound(self.AskNewRoundFunc)), color = "Green")
+            # Create a screen for user to see the new scores and play next hand
+            self.RoundView.EndOfRoundScreen(scoresMsg, self.PlayHand)
+
 
     # See if playable tiles are left in any player's hand
     def PlayableTilesRemain(self):
@@ -105,7 +125,7 @@ class Round:
         return False
 
     # See if the player with turn is selecting a tile from hand to place
-    def PlayerSelectingHandTile(self):
+    def IsPlayerSelectingHandTile(self):
         for playerNum in range(2):
             if (self.Players[playerNum].selectingHandTile):
                 return True
@@ -113,7 +133,7 @@ class Round:
         return False
 
     # See if the player with the turn is placing a tile onto a stack tile
-    def PlayerPlacingOnStack(self):
+    def IsPlayerPlacingOnStack(self):
         for playerNum in range(2):
             if (self.Players[playerNum].placingOnStackTile):
                 return True
@@ -176,7 +196,7 @@ class Round:
 
     # Add up the scores at the end of a hand
     def AddUpScores(self):
-        pass
+        return "haha"
 
     # Clear the remaining tiles in hand
     def ClearHands(self):
@@ -196,15 +216,55 @@ class Round:
     # Initalizes all the boneyards
     def InitalizeBoneyards(self):
         for playerNum in range(2):
-            self.Decks[playerNum].CreateBoneyard(self.Players[playerNum].color)
+            self.Decks[playerNum].CreateBoneyard(self.Players[playerNum].color, playerNum)
 
     # Initalizes all the stacks
     def InitalizeStacks(self):
         for playerNum in range(2):
             self.Decks[playerNum].CreateStack()
 
+    # Determines who won the round, adds a win to their score, returns the player number of who one
+    def DetermineWinner(self):
+
+        # Player 0 won
+        if self.Players[0].score > self.Players[1].score:
+            self.Players[0].roundsWon += 1
+            return (0, "haha0")
+
+        # Players 1 won
+        elif self.Players[1].score > self.Players[0].score:
+            self.Players[1].roundsWon += 1
+            return (0, "haha1")
+
+        # Tie
+        else:
+            return (None, "tie!")
+            
+    # Returns to the tournament class
+    def EndTournament(self):
+        self.EndTournament()
+
+    # Sets the return to tournament function
+    def SetEndTournamentFunction(self, endFunction):
+        self.EndTournamentFunc = endFunction
+
+    # Finds what stack and where a tile is
+    def FindStackLocation(self, tile):
+
+        # Check in player stack for tile
+        for tileNum in range(len(self.Decks[self.turnNum].stack)):
+            if (tile == self.Decks[self.turnNum].stack[tileNum]):
+                return (self.turnNum, tileNum)
+
+        # Check in opponent stack for tile
+        for tileNum in range(len(self.Decks[self.opponentNum].stack)):
+            if (tile == self.Decks[self.opponentNum].stack[tileNum]):
+                return (self.opponentNum, tileNum)
+        
+
     # ---------------------------------------- GUI STUFF ----------------------------------------
 
+"""
     # Prints menu for the current turn
     def CreateTurnMenu(self):
 
@@ -385,3 +445,5 @@ class Round:
         # If the computer is placing onto stack tile
         elif(self.Players[self.turnNum].placingOnStackTile):
             self.Players[self.turnNum].PlaceOnStackTile()
+
+"""

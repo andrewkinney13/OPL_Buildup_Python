@@ -12,9 +12,10 @@ class Player:
         self.selectingHandTile = False
         self.placingOnStackTile = False
         
-        self.TileToPlace = Tile()
-        self.TileToPlaceOn = Tile()
-        self.CreateTurnMenu = None
+        self.tileToPlace = Tile()
+        self.tileToPlaceOn = Tile()
+
+        self.PlayHandFunction = None
 
     # Checks if player has playable tiles
     def HasPlayableTiles(self):
@@ -38,9 +39,7 @@ class Player:
             return True
         else:
             return False
-
-
-    # Place tile onto stack
-    def PlaceTileOnStack(self):
-
-        self.placingOnStackTile = False
+       
+    # Assign play round function
+    def SetPlayHandFunction(self, PlayHand):
+        self.PlayHandFunction = PlayHand
