@@ -1,7 +1,6 @@
-
 from DeckView import DeckView
 
-class HumanView:
+class PlayerView:
     
     # Constructor
     def __init__(self, GUI):
@@ -45,7 +44,7 @@ class HumanView:
         # Create a save and exit button on the right side of the screen
         self.GUI.CreateSaveExitButton(opponentMainFrame)
 
-        # Create a continue button if the moves have been made
+        # Create a continue button if the moves have been made or no tiles selectable
         if(not Players[playerNum].selectingHandTile and not Players[playerNum].placingOnStackTile):
             self.GUI.CreateFrameMenuButton("Continue", TileFunction, playerMainFrame, fg = "white", bg = "green")
 

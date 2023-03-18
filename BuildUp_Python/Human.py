@@ -1,6 +1,6 @@
 
 from Player import Player
-from HumanView import HumanView
+from PlayerView import PlayerView
 
 class Human(Player):
     
@@ -8,7 +8,7 @@ class Human(Player):
     def __init__(self, name, color, GUI):
      
         self.GUI = GUI
-        self.HumanView = HumanView(GUI)
+        self.PlayerView = PlayerView(GUI)
 
         # Call base class constructor
         super().__init__(name, color)
@@ -20,7 +20,7 @@ class Human(Player):
         Decks[playerNum].DetermineHandPlacability(Decks[playerNum].stack, Decks[opponentNum].stack)
 
         # Create a screen for human to select what tile is chosen 
-        self.HumanView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected)
+        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected)
         
     # Select what stack to place on
     def SelectStackTile(self, Players, Decks, playerNum, opponentNum, tileToPlace):
@@ -34,7 +34,7 @@ class Human(Player):
         Decks[1].ResetHandTileStatus()
 
         # Create a screen for human to select what stack to place on
-        self.HumanView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected)
+        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected)
 
     # Display the tiles at the end of a turn
     def DisplayBoard(self, Players, Decks, playerNum, opponentNum, HandFunc):
@@ -44,7 +44,7 @@ class Human(Player):
         Decks[1].ResetStackTileStatus()
 
         # Create a screen for human to see the new board, and continue to next turn
-        self.HumanView.CreateTileScreen(Players, Decks, playerNum, opponentNum, HandFunc)
+        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, HandFunc)
 
     # Function ran when tile is pressed, returns itself to round
     def TileSelected(self, tile):

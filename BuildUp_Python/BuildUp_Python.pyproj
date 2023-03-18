@@ -23,12 +23,11 @@
   <ItemGroup>
     <Compile Include="Client.py" />
     <Compile Include="Computer.py" />
-    <Compile Include="ComputerView.py" />
     <Compile Include="Deck.py" />
     <Compile Include="DeckView.py" />
     <Compile Include="Human.py" />
-    <Compile Include="HumanView.py" />
     <Compile Include="Player.py" />
+    <Compile Include="PlayerView.py" />
     <Compile Include="Round.py" />
     <Compile Include="RoundView.py" />
     <Compile Include="Tile.py" />
