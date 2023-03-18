@@ -45,7 +45,7 @@ class PlayerView:
         self.GUI.CreateSaveExitButton(opponentMainFrame)
 
         # Create a continue button if the moves have been made or no tiles selectable
-        if(not Players[playerNum].selectingHandTile and not Players[playerNum].placingOnStackTile):
+        if(not Players[playerNum].selectingHandTile and not Players[playerNum].placingOnStackTile or self.NoSelectableTiles(playerNum, opponentNum, Decks)):
             self.GUI.CreateFrameMenuButton("Continue", TileFunction, playerMainFrame, fg = "white", bg = "green")
 
     # Creates subframes and labels for players names
@@ -66,3 +66,24 @@ class PlayerView:
         # Put player's attributes in label
         self.GUI.CreateFrameMenuLabel("Score: " + str(player.score), subFrame)
         self.GUI.CreateFrameMenuLabel("Rounds won: " + str(player.roundsWon), subFrame)
+
+    # Checks to see if a player has any selectable tiles on screen 
+    def NoSelectableTiles(self, playerNum, opponentNum, Decks):
+        
+        # Check for hand placeability
+        for tileNum in range(len(Decks[playerNum].hand)):
+            if Decks[playerNum].hand[tileNum].handPlacable:
+                return False
+
+        # Check for stack placeability, player stack
+        for tileNum in range(len(Decks[playerNum].stack)):
+            if Decks[playerNum].stack[tileNum].stackPlacable:
+                return False
+
+        # Check for stack placeability, opponenet stack
+        for tileNum in range(len(Decks[opponentNum].stack)):
+            if Decks[opponentNum].stack[tileNum].stackPlacable:
+                return False
+
+        # No tiles placeabile, return true
+        return True

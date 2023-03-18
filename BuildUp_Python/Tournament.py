@@ -33,7 +33,6 @@ class Tournament:
         # Plays a round of buildup
         myRound = Round(self.Players, self.Decks, self.GUI)
         myRound.PlayRound()
-        
        
     def EndTournament(self):
         # Tournament over, determine the winner and exit

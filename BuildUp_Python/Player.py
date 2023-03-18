@@ -36,3 +36,21 @@ class Player:
     # Assign play round function
     def SetPlayHandFunction(self, PlayHand):
         self.PlayHandFunction = PlayHand
+
+    # Function ran when tile is pressed, returns itself to round
+    def TileSelected(self, tile = None):
+
+        # Selecting hand tile
+        if (self.selectingHandTile):
+            if tile != None:
+                self.tileToPlace = tile
+            self.selectingHandTile = False
+
+        # Selecting stack tile
+        elif(self.placingOnStackTile):
+            if tile != None:
+                self.tileToPlaceOn = tile
+            self.placingOnStackTile = False
+
+        # Return to play hand
+        self.PlayHandFunction()

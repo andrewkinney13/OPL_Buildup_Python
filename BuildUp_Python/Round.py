@@ -17,7 +17,6 @@ class Round:
         self.Decks = Decks
         self.turnNum = 999
         self.opponentNum = 999
-        self.count1 = 99
 
     # Plays round
     def PlayRound(self):
@@ -30,13 +29,10 @@ class Round:
 
         # If hand successfully created (boneyard tiles remain), play a hand
         if (len(self.Decks[0].hand)):
-            self.count1 -= 1
             self.PlayHand()
 
-        # This is just for testing, but would be the case if a round ends
-        # Once scoring properly implemented, change if statement to an else
-        if (self.count1 <= 0):
-           
+        # End the round if not
+        else:           
             # Clear everything
             self.ClearHands()
             self.ClearStacks()
@@ -47,7 +43,6 @@ class Round:
             # Create a screen asking if user wants to play another hand
             self.RoundView.AskNewRound(winnerNum, winnerMsg, self.EndTournament, self.PlayRound) 
         
-
     # Play hand of buildup until no playable tiles remain
     def PlayHand(self):
 

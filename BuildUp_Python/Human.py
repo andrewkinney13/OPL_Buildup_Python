@@ -46,21 +46,5 @@ class Human(Player):
         # Create a screen for human to see the new board, and continue to next turn
         self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, HandFunc)
 
-    # Function ran when tile is pressed, returns itself to round
-    def TileSelected(self, tile):
-
-        # Selecting hand tile
-        if (self.selectingHandTile):
-            self.tileToPlace = tile
-            self.selectingHandTile = False
-
-        # Selecting stack tile
-        elif(self.placingOnStackTile):
-            self.tileToPlaceOn = tile
-            self.placingOnStackTile = False
-
-        # Return to play hand
-        self.PlayHandFunction()
-
     
 

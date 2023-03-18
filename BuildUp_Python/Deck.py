@@ -139,3 +139,11 @@ class Deck:
 
         # There is no placeable tile
         return False
+
+    # Finds tile's index in list, returns -1 if not found
+    def FindTile(self, tile, tileList):
+        for tileNum in range(len(tileList)):
+            if tileList[tileNum] == tile:
+                return tileNum
+
+        return -1
