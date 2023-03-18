@@ -2,10 +2,16 @@
 class Tile:
 
     # Constructor
-    def __init__(self, color = 'E', sideOnePips = 999, sideTwoPips = 999):
+    def __init__(self, color = 'E', sideOnePips = 999, sideTwoPips = 999, playerNum = 999):
         self.color = color
         self.sideOnePips = sideOnePips
         self.sideTwoPips = sideTwoPips
+
+        # Tile's current placability status, in context of a current turn
+        self.handPlacable = False
+        self.stackPlacable = False
+
+        # Tile highlighted if selected by a player
         self.highlighted = False
         
     # Returns if tile is a doulbe

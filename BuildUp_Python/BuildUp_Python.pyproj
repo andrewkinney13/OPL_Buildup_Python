@@ -23,13 +23,19 @@
   <ItemGroup>
     <Compile Include="Client.py" />
     <Compile Include="Computer.py" />
+    <Compile Include="ComputerView.py" />
     <Compile Include="Deck.py" />
+    <Compile Include="DeckView.py" />
     <Compile Include="Human.py" />
+    <Compile Include="HumanView.py" />
     <Compile Include="Player.py" />
     <Compile Include="Round.py" />
+    <Compile Include="RoundView.py" />
     <Compile Include="Tile.py" />
+    <Compile Include="TileView.py" />
     <Compile Include="Tournament.py" />
     <Compile Include="GUI.py" />
+    <Compile Include="TournamentView.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -1,5 +1,6 @@
 
 from GUI import GUI
+from TournamentView import TournamentView
 from Player import Player
 from Human import Human
 from Computer import Computer
@@ -10,60 +11,64 @@ class Tournament:
 
     # Constructor
     def __init__(self, GUI):
-        # Get the GUI
+        
+        # Initalize View object
         self.GUI = GUI
+        self.GUI.SetSaveFunction(self.SaveGame)
+        self.TournamentView = TournamentView(GUI)
 
-        # Create inital menu screen
-        self.GUI.CreateLabel("Welcome to my BuildUp Program for OPL!\nPlease seleect how to initalize your game...")
-        self.GUI.CreateButton("New Human vs Computer Game", self.DeclareHuamnComputerGame)
-        self.GUI.CreateButton("New Human vs Human Game", self.DeclareHumanHumanGame)
-        self.GUI.CreateButton("New Computer vs Computer Game", self.DeclareComputerComputerGame)
-        self.GUI.CreateButton("Load Game from Serialization File", self.LoadSerializationFile)
+        # Declare data members
+        self.Players = []
+        self.Decks = []
 
-        # Start the "mainloop" (event driven program)
-        self.GUI.StartInputLoop()
+    # Starts Tournament, just initalizes everything
+    def StartTournament(self):
+        
+        # Create the inital menu asking how to start the game
+        self.TournamentView.StartMenu(self.DeclareHuamnComputerGame, self.DeclareHumanHumanGame, self.DeclareComputerComputerGame, self.LoadSerializationFile)
 
-    # Play Tournament
+    # Plays rounds of buildup 
     def PlayTournament(self):
         
-        # Initalize Round object with players
-        self.Round = Round(self.GUI, self.Players, self.Decks, self.SaveGame)
-
-        # Play a round of BuildUp
-        self.Round.PlayRound(self.AskNewRound)
+        # Plays a round of buildup
+        myRound = Round(self.Players, self.Decks, self.GUI)
+        myRound.PlayRound()
+        
+       
+    def EndTournament(self):
+        # Tournament over, determine the winner and exit
+        winnerNum = self.DetermineWinner()
+        self.TournamentView.ExitScreen(winnerNum)
 
     # Declare 1 human, 1 computer
     def DeclareHuamnComputerGame(self):
 
         # Initalize 2 human players
-        self.Players = []
-        self.Players.append(Human('Human'))
-        self.Players.append(Computer('Computer'))
+        self.Players.append(Human('Human', "B", self.GUI))
+        self.Players.append(Computer('Computer', "W", self.GUI))
 
         # Ask for size of domino set
-        self.AskDominoSetSize()
+        self.TournamentView.AskDominoSetSize(self.DeclareDecks)
 
     # Declare 2 humans
     def DeclareHumanHumanGame(self):
 
         # Initalize 2 human players
-        self.Players = []
-        self.Players.append(Human('Human 1'))
-        self.Players.append(Human('Human 2'))
+        self.Players.append(Human('Human 1', "B", self.GUI))
+        self.Players.append(Human('Human 2', "W", self.GUI))
 
         # Ask for size of domino set
-        self.AskDominoSetSize()
+        self.TournamentView.AskDominoSetSize(self.DeclareDecks)
 
     # Declare 2 computers
     def DeclareComputerComputerGame(self):
 
         # Initalize 2 human players
-        self.Players = []
-        self.Players.append(Computer('Computer 1'))
-        self.Players.append(Computer('Computer 2'))
+        self.Players.append(Computer('Computer 1', "B", self.GUI))
+        self.Players.append(Computer('Computer 2', "W", self.GUI))
 
         # Ask for size of domino set
-        self.AskDominoSetSize()
+        self.TournamentView.AskDominoSetSize(self.DeclareDecks)
 
     # Initalize game state from serialization file
     def LoadSerializationFile(self):
@@ -77,18 +82,8 @@ class Tournament:
     def SaveGame(self):
         exit()
 
-    # Ask user what size domino set to play with
-    def AskDominoSetSize(self):
-        self.GUI.ClearWindow()
-        self.GUI.CreateLabel("What Size Set of Domino Tiles\nWould you Like to Play With?")
-        self.GUI.CreateButton("Double-six", lambda: (self.DeclareDecks(6)))
-        self.GUI.CreateButton("Double-seven", lambda: (self.DeclareDecks(7)))
-        self.GUI.CreateButton("Double-eight", lambda: (self.DeclareDecks(8)))
-        self.GUI.CreateButton("Double-nine", lambda: (self.DeclareDecks(9)))
-
     # Set deck w/ domino set size
     def DeclareDecks(self, tileSetSize):
-        self.Decks = []
 
         # Create as many decks as there are players, with domino set size
         for i in range(len(self.Players)):
@@ -107,12 +102,20 @@ class Tournament:
         self.GUI.CreateButton("yes", self.PlayTournament, color = "green")
         self.GUI.CreateButton("no", self.FinalScreen, color = "red")
 
-    # Show final screen with who won and stuff
-    def FinalScreen(self):
-        # Clear the GUI
-        self.GUI.ClearWindow()
+    # Determine the winner of the tournament
+    def DetermineWinner(self):
+        
+         # Player 0 won
+        if self.Players[0].roundsWon > self.Players[1].roundsWon:
+            return 0
 
-        # Print goodbye 
-        self.GUI.CreateLabel("Tournament over!")
-        self.GUI.CreateButton("exit", exit, color = "red")
+        # Players 1 won
+        elif self.Players[1].roundsWon > self.Players[0].roundsWon:
+            return 1
+
+        # Tie
+        else:
+            return None
+
+
 
