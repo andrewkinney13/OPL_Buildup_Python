@@ -22,7 +22,7 @@ class PlayerView:
         else:
             self.GUI.CreateMenuLabel(str(Players[playerNum].name) + "'s turn over...\n" + topMsg)
 
-         # Create an extra text box if text for a message was specified
+         # Create an extra text box if text for a message was specified (make it here first so it doesn't get covered by y fill later on)
         if bottomMsg != None:
             self.GUI.CreateBottomMenuLabel(bottomMsg)
 
@@ -52,8 +52,6 @@ class PlayerView:
         # Create a continue button if the moves have been made or no tiles selectable
         if(not Players[playerNum].selectingHandTile and not Players[playerNum].placingOnStackTile or self.NoSelectableTiles(playerNum, opponentNum, Decks)):
             self.GUI.CreateFrameMenuButton("Continue", TileFunction, playerMainFrame, fg = "white", bg = "green")
-
-       
 
 
     # Creates subframes and labels for players names

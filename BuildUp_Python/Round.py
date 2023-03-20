@@ -55,6 +55,7 @@ class Round:
                 # Player is selecting from hand to place
                 if(self.Players[self.turnNum].selectingHandTile):
                     self.Players[self.turnNum].SelectHandTile(self.Players, self.Decks, self.turnNum, self.opponentNum)
+
                    
                 # Player selects the tile on stack to place on 
                 elif(self.Players[self.turnNum].placingOnStackTile):
