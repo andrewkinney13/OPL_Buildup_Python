@@ -20,7 +20,7 @@ class Human(Player):
         Decks[playerNum].DetermineHandPlacability(Decks[playerNum].stack, Decks[opponentNum].stack)
 
         # Create a screen for human to select what tile is chosen 
-        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected)
+        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected, "Please select a tile from your hand to play...")
         
     # Select what stack to place on
     def SelectStackTile(self, Players, Decks, playerNum, opponentNum, tileToPlace):
@@ -34,17 +34,7 @@ class Human(Player):
         Decks[1].ResetHandTileStatus()
 
         # Create a screen for human to select what stack to place on
-        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected)
-
-    # Display the tiles at the end of a turn
-    def DisplayBoard(self, Players, Decks, playerNum, opponentNum, HandFunc):
-
-        # Reset the status of the stack tiles
-        Decks[0].ResetStackTileStatus()
-        Decks[1].ResetStackTileStatus()
-
-        # Create a screen for human to see the new board, and continue to next turn
-        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, HandFunc)
+        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected, "Please select a stack tile to play on...")
 
     
 

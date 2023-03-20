@@ -54,6 +54,7 @@ class Tile:
                 return self.sideOnePips > other.sideOnePips
 
     def __eq__(self, other):
+
         # everything is the same
         if (self.color == other.color and self.sideOnePips == other.sideOnePips and self.sideTwoPips == other.sideTwoPips):
             return True

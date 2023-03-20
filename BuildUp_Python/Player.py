@@ -38,19 +38,39 @@ class Player:
         self.PlayHandFunction = PlayHand
 
     # Function ran when tile is pressed, returns itself to round
-    def TileSelected(self, tile = None):
+    def TileSelected(self, tile):
 
         # Selecting hand tile
         if (self.selectingHandTile):
-            if tile != None:
-                self.tileToPlace = tile
+            self.tileToPlace = tile
             self.selectingHandTile = False
 
         # Selecting stack tile
         elif(self.placingOnStackTile):
-            if tile != None:
-                self.tileToPlaceOn = tile
+            self.tileToPlaceOn = tile
             self.placingOnStackTile = False
 
         # Return to play hand
         self.PlayHandFunction()
+
+    # Function ran when continue button pressed, returns to round
+    def ContinueSelected(self):
+        if (self.selectingHandTile):
+            self.selectingHandTile = False
+
+        # Selecting stack tile
+        elif(self.placingOnStackTile):
+            self.placingOnStackTile = False
+
+        # Return to play hand
+        self.PlayHandFunction()
+
+    # Display the tiles at the end of a turn
+    def DisplayBoard(self, Players, Decks, playerNum, opponentNum, HandFunc, topMsg = None, bottomMsg = None):
+
+        # Reset the status of the stack tiles
+        Decks[0].ResetStackTileStatus()
+        Decks[1].ResetStackTileStatus()
+
+        # Create a screen for human to see the new board, and continue to next turn
+        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, HandFunc, topMsg, bottomMsg)

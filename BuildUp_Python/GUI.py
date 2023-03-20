@@ -44,11 +44,18 @@ class GUI():
         label = tk.Label(text = text, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont)
         label.pack()
 
+    # Creates a label on the bottom of the screen
+    def CreateBottomMenuLabel(self, text):
+
+        # Create the label
+        label = tk.Label(text = text, width = self.defaultWidth, height = 7, font = self.defaultFont)
+        label.pack(side = "bottom", fill = "y")
+
     # Creates regular menu label
     def CreateFrameMenuLabel(self, text, frame):
 
         # Create label 
-        label = tk.Label(text = text, master = frame, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont)
+        label = tk.Label(text = text, master = frame, width = self.defaultWidth, height = self.defaultHeight-1, font = self.defaultFont)
         label.pack()
 
     # Creates a main frame for subframes to attatch to, with specified side
@@ -56,7 +63,7 @@ class GUI():
 
         # Create frame
         frame = tk.Frame(self.root)
-        frame.pack(side = side, fill = 'y')
+        frame.pack(side = side, fill = "y")
 
         # Return frame
         return frame
@@ -74,12 +81,9 @@ class GUI():
     def SetSaveFunction(self, saveFunc):
         self.SaveFunction = saveFunc
 
-    # Creates a save and exit button, which will return to tournament to save to a serialization file
-    def CreateSaveExitButton(self, frame):
+    def GetSaveFunction(self):
+        return self.SaveFunction
 
-         # Create the button
-        button = tk.Button(text = "Save and Exit", command = self.SaveFunction, master = frame, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont, fg = "white", bg = "red")
-        button.pack()
 
     """
        # Creates entry box with default attributes

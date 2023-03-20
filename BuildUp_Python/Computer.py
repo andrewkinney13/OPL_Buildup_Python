@@ -8,6 +8,9 @@ class Computer(Player):
         self.GUI = GUI
         self.PlayerView = PlayerView(GUI)
 
+        self.handTileSelectionMsg = ""
+        self.stackTileSelectionMsg = ""
+
         # Call base class constructor
         super().__init__(name, color)
 
@@ -17,15 +20,17 @@ class Computer(Player):
         # Pick the tile to select
         self.TileSelectionLogic(Decks, playerNum, opponentNum)
 
-        # Highlight the selected tile from hand
-        index = Decks[playerNum].FindTile(self.tileToPlace, Decks[playerNum].hand)
-        Decks[playerNum].hand[index].highlighted = True
-
         # Create the menu
-        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected)
+        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.ContinueSelected, "Computer to select tile from hand to play...", self.handTileSelectionMsg)
+
+    # Select what stack to place on
+    def SelectStackTile(self, Players, Decks, playerNum, opponentNum, tileToPlace):
+
+        # Print screen with selected stack tile
+        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.ContinueSelected, "Computer to select stack tile to play on...", self.stackTileSelectionMsg)
 
     # Selects what tile from hand to play, and on what stack
-    def TileSelectionLogic(self, Decks, playerNum, opponentNum):
+    def TileSelectionLogic(self, Decks, playerNum, opponentNum, helping = False):
 
         # Determine placablility of hand tiles
         Decks[playerNum].DetermineHandPlacability(Decks[playerNum].stack, Decks[opponentNum].stack)
@@ -74,9 +79,21 @@ class Computer(Player):
 
                 # the hand tile is placeable, and it is the opposite color
                 if (tempHand[handTile] > tempStack[stackTile] and tempStack[stackTile].color != Decks[playerNum].hand[0].color):
+                    
+                    # assign the tile attributes
                     self.tileToPlace = tempHand[handTile]
                     self.tileToPlaceOn = tempStack[stackTile]
                     tileFound = True
+
+                    # assign the message attributes
+                    if helping:
+                        self.handTileSelectionMsg = "Reccomends " + self.tileToPlace.GetStringForm()  + " because it is the\n lowest placeable tile your hand\n that can be played on opponent"
+                        self.stackTileSelectionMsg = "Reccomends " + self.tileToPlaceOn.GetStringForm() + " because it is the\n highest stack tile " + self.tileToPlace.GetStingForm() + " can play on"
+
+                    else:
+                        self.handTileSelectionMsg = "Chose " + self.tileToPlace.GetStringForm()  + " because it is the\n lowest placeable tile in hand\n that can be played on opponent"
+                        self.stackTileSelectionMsg = "Chose " + self.tileToPlaceOn.GetStringForm() + " because it is the\n highest stack tile " + self.tileToPlace.GetStringForm() + " can play on"
+
                     break
 
             if tileFound:
@@ -84,15 +101,28 @@ class Computer(Player):
 
         # None placeable on opponent, place at lowest point on own stack tile
         if not tileFound:
+            tempStack.reverse()
             for handTile in range(len(tempHand)):
                 for stackTile in range(len(tempStack)):
 
                     # the hand tile is placeable, anywhere
                     if (tempHand[handTile] > tempStack[stackTile]):
+
+                        # assign the tile attributes
                         self.tileToPlace = tempHand[handTile]
                         self.tileToPlaceOn = tempStack[stackTile]
                         tileFound = True
-                        break
+
+                        # assign the message attributes
+                        if helping:
+                            self.handTileSelectionMsg = "Reccomends " + self.TileToPlace.GetStringForm()  + " because it is the\n lowest placeable tile your hand\n that can be played on a stack"
+                            self.stackTileSelectionMsg = "Reccomends " + self.tileToPlaceOn.GetStringForm() + " because it is the\n lowest stack tile " + self.tileToPlace.GetStingForm() + " can play on (to save points)"
+
+                        else:
+                            self.handTileSelectionMsg = "Chose " + self.TileToPlace.GetStringForm()  + " because it is the\n lowest placeable tile in hand\n that can be played on a stack"
+                            self.stackTileSelectionMsg = "Chose " + self.tileToPlaceOn.GetStringForm() + " because it is the\n lowest stack tile " + self.tileToPlace.GetStingForm() + " can play on (to save points)"
+
+                            break
 
                 if tileFound:
                     break

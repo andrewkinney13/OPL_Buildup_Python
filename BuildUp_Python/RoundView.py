@@ -30,3 +30,4 @@ class RoundView:
 
         # Create continue button 
         self.GUI.CreateMenuButton("Continue", PlayHand, fg = "white", bg = "green")
+

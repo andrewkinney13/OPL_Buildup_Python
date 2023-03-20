@@ -3,24 +3,28 @@ from DeckView import DeckView
 class PlayerView:
     
     # Constructor
-    def __init__(self, GUI):
+    def __init__(self, GUI, ):
         self.GUI = GUI
 
     # Creates a screen asking user what tile from their hand to select
-    def CreateTileScreen(self, Players, Decks, playerNum, opponentNum, TileFunction):
+    def CreateTileScreen(self, Players, Decks, playerNum, opponentNum, TileFunction, topMsg = None, bottomMsg = None):
 
         # Clear the window
         self.GUI.ClearWindow()
 
         # Create label asking for expected input
         if (Players[playerNum].selectingHandTile):
-            self.GUI.CreateMenuLabel(str(Players[playerNum].name) + "'s turn...\nPlease select a tile from your hand to play")
+            self.GUI.CreateMenuLabel(str(Players[playerNum].name) + "'s turn...\n" + topMsg)
 
         elif(Players[playerNum].placingOnStackTile):
-            self.GUI.CreateMenuLabel(str(Players[playerNum].name) + "'s turn...\nPlease select a stack tile to play on")
+            self.GUI.CreateMenuLabel(str(Players[playerNum].name) + "'s turn...\n" + topMsg)
 
         else:
-            self.GUI.CreateMenuLabel(str(Players[playerNum].name) + "'s turn over...\nBoard after your move")
+            self.GUI.CreateMenuLabel(str(Players[playerNum].name) + "'s turn over...\n" + topMsg)
+
+         # Create an extra text box if text for a message was specified
+        if bottomMsg != None:
+            self.GUI.CreateBottomMenuLabel(bottomMsg)
 
         # Create frames for each player's attributes
         playerMainFrame = self.GUI.CreateMainFrame("left")
@@ -42,11 +46,15 @@ class PlayerView:
         self.CreatePlayerAttributeFrames(opponentMainFrame, Players[opponentNum])
 
         # Create a save and exit button on the right side of the screen
-        self.GUI.CreateSaveExitButton(opponentMainFrame)
+        saveFunc = self.GUI.GetSaveFunction()
+        self.GUI.CreateFrameMenuButton("Save and Exit", saveFunc, opponentMainFrame, fg = "white", bg = "red")
 
         # Create a continue button if the moves have been made or no tiles selectable
         if(not Players[playerNum].selectingHandTile and not Players[playerNum].placingOnStackTile or self.NoSelectableTiles(playerNum, opponentNum, Decks)):
             self.GUI.CreateFrameMenuButton("Continue", TileFunction, playerMainFrame, fg = "white", bg = "green")
+
+       
+
 
     # Creates subframes and labels for players names
     def CreateNameFrames(self, mainFrame, name):

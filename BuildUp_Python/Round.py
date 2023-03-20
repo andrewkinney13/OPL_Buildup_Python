@@ -60,6 +60,7 @@ class Round:
                 elif(self.Players[self.turnNum].placingOnStackTile):
                     self.Decks[self.turnNum].HighlightHandTile(self.Players[self.turnNum].tileToPlace)
                     self.Players[self.turnNum].SelectStackTile(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].tileToPlace)
+                    
             
                 # Tile from hand selected, and stack tile to play on selected, end the turn
                 else:
@@ -73,7 +74,7 @@ class Round:
                     self.Decks[self.turnNum].RemoveHandTile(self.Players[self.turnNum].tileToPlace)
 
                     # Display finished board
-                    self.Players[self.turnNum].DisplayBoard(self.Players, self.Decks, self.turnNum, self.opponentNum, self.PlayHand)
+                    self.Players[self.turnNum].DisplayBoard(self.Players, self.Decks, self.turnNum, self.opponentNum, self.PlayHand, "Board after placement...")
 
                     # Reset the player's tiles' status
                     self.Decks[self.turnNum].ResetHighlightedTileStatus()
@@ -86,7 +87,7 @@ class Round:
             else:
 
                 # Create a screen to tell the user a turn is being skipped
-                self.TournamentView.SkipTurn(self.turnNum)
+                self.Players[self.turnNum].DisplayBoard(self.Players, self.Decks, self.turnNum, self.opponentNum, self.PlayHand, "No moves availible, skipping turn...")
 
                 # Change turns 
                 self.ChangeTurns()
@@ -97,11 +98,7 @@ class Round:
             # Add up the scores, get reasoning
             scoresMsg = self.AddUpScores()
 
-            # Clear the remaining tiles in hand
-            self.ClearHands()
-
-            # Create a screen for user to see the new scores and play next hand
-            self.RoundView.EndOfHandScreen(scoresMsg, self.PlayHand)
+            self.Players[self.turnNum].DisplayBoard(self.Players, self.Decks, self.turnNum, self.opponentNum, self.PlayHand, "Hand over, adding up scores based on board below ...", scoresMsg)
 
 
     # See if playable tiles are left in any player's hand
@@ -188,10 +185,7 @@ class Round:
     # Add up the scores at the end of a hand
     def AddUpScores(self):
 
-
-
-
-        return "haha"
+        return "msg"
 
     # Clear the remaining tiles in hand
     def ClearHands(self):
