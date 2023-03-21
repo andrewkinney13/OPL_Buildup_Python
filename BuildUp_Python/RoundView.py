@@ -19,15 +19,5 @@ class RoundView:
         self.GUI.CreateMenuButton("Play New Round", PlayRound, fg = "white", bg = "green")
         self.GUI.CreateMenuButton("Exit", EndTournament, fg = "white", bg = "red")
         
-    # End of hand screen 
-    def EndOfHandScreen(self, scoreMsg, PlayHand):
-        
-        # Clear the window
-        self.GUI.ClearWindow()
 
-        # Alert player score changes 
-        self.GUI.CreateMenuLabel(scoreMsg)
-
-        # Create continue button 
-        self.GUI.CreateMenuButton("Continue", PlayHand, fg = "white", bg = "green")
-
+ 

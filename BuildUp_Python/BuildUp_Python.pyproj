@@ -27,7 +27,6 @@
     <Compile Include="DeckView.py" />
     <Compile Include="Human.py" />
     <Compile Include="Player.py" />
-    <Compile Include="PlayerView.py" />
     <Compile Include="Round.py" />
     <Compile Include="RoundView.py" />
     <Compile Include="Tile.py" />

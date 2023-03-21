@@ -65,6 +65,10 @@ class DeckView:
             else:
                 self.TileView.CreateTileLabel(deck.hand[tile], subFrame)
 
+        # If no tiles exist in hand, pack an empty tile for spacing reasons
+        if (range(len(deck.hand) == 0)):
+            self.TileView.CreateBlankTileLabel(subFrame)
+
 
     # Create boneuard subframe
     def CreateBoneyardSubFrame(self, deck, mainFrame):

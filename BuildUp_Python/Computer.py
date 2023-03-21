@@ -1,12 +1,13 @@
 from Player import Player
-from PlayerView import PlayerView
 
 class Computer(Player):
 
     # Constructor
     def __init__(self, name, color, GUI):
         self.GUI = GUI
-        self.PlayerView = PlayerView(GUI)
+
+        self.handTileSelectionPrompt = "Computer to select tile from hand to play..."
+        self.stackTileSelectionPrompt = "Computer to select stack tile to play on..."
 
         self.handTileSelectionMsg = ""
         self.stackTileSelectionMsg = ""
@@ -17,17 +18,18 @@ class Computer(Player):
     # Select tile from hand to play
     def SelectHandTile(self, Players, Decks, playerNum, opponentNum):
 
-        # Pick the tile to select
+        # Pick the tile to select and play on
         self.TileSelectionLogic(Decks, playerNum, opponentNum)
 
-        # Create the menu
-        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.ContinueSelected, "Computer to select tile from hand to play...", self.handTileSelectionMsg)
+        # Update turn status
+        self.selectingHandTile = False
 
     # Select what stack to place on
     def SelectStackTile(self, Players, Decks, playerNum, opponentNum, tileToPlace):
+        
+        # Update turn status
+        self.placingOnStackTile = False
 
-        # Print screen with selected stack tile
-        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.ContinueSelected, "Computer to select stack tile to play on...", self.stackTileSelectionMsg)
 
     # Selects what tile from hand to play, and on what stack
     def TileSelectionLogic(self, Decks, playerNum, opponentNum, helping = False):
@@ -87,11 +89,11 @@ class Computer(Player):
 
                     # assign the message attributes
                     if helping:
-                        self.handTileSelectionMsg = "Reccomends " + self.tileToPlace.GetStringForm()  + " because it is the\n lowest placeable tile your hand\n that can be played on opponent"
+                        self.handTileSelectionMsg = "Reccomends " + self.tileToPlace.GetStringForm()  + " because it is the\n lowest placable tile your hand\n that can be played on opponent"
                         self.stackTileSelectionMsg = "Reccomends " + self.tileToPlaceOn.GetStringForm() + " because it is the\n highest stack tile " + self.tileToPlace.GetStingForm() + " can play on"
 
                     else:
-                        self.handTileSelectionMsg = "Chose " + self.tileToPlace.GetStringForm()  + " because it is the\n lowest placeable tile in hand\n that can be played on opponent"
+                        self.handTileSelectionMsg = "Chose " + self.tileToPlace.GetStringForm()  + " because it is the\n lowest placable tile in hand\n that can be played on opponent"
                         self.stackTileSelectionMsg = "Chose " + self.tileToPlaceOn.GetStringForm() + " because it is the\n highest stack tile " + self.tileToPlace.GetStringForm() + " can play on"
 
                     break
@@ -115,12 +117,12 @@ class Computer(Player):
 
                         # assign the message attributes
                         if helping:
-                            self.handTileSelectionMsg = "Reccomends " + self.TileToPlace.GetStringForm()  + " because it is the\n lowest placeable tile your hand\n that can be played on a stack"
-                            self.stackTileSelectionMsg = "Reccomends " + self.tileToPlaceOn.GetStringForm() + " because it is the\n lowest stack tile " + self.tileToPlace.GetStingForm() + " can play on (to save points)"
+                            self.handTileSelectionMsg = "Reccomends " + self.tileToPlace.GetStringForm()  + " because it is the\n lowest placable tile your hand\n that can be played on a stack"
+                            self.stackTileSelectionMsg = "Reccomends " + self.tileToPlaceOn.GetStringForm() + " because it is the\n lowest stack tile " + self.tileToPlace.GetStringForm() + " can play on (to save points)"
 
                         else:
-                            self.handTileSelectionMsg = "Chose " + self.TileToPlace.GetStringForm()  + " because it is the\n lowest placeable tile in hand\n that can be played on a stack"
-                            self.stackTileSelectionMsg = "Chose " + self.tileToPlaceOn.GetStringForm() + " because it is the\n lowest stack tile " + self.tileToPlace.GetStingForm() + " can play on (to save points)"
+                            self.handTileSelectionMsg = "Chose " + self.tileToPlace.GetStringForm()  + " because it is the\n lowest placable tile in hand\n that can be played on a stack"
+                            self.stackTileSelectionMsg = "Chose " + self.tileToPlaceOn.GetStringForm() + " because it is the\n lowest stack tile " + self.tileToPlace.GetStringForm() + " can play on (to save points)"
 
                             break
 

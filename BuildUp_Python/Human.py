@@ -1,6 +1,5 @@
 
 from Player import Player
-from PlayerView import PlayerView
 
 class Human(Player):
     
@@ -8,7 +7,12 @@ class Human(Player):
     def __init__(self, name, color, GUI):
      
         self.GUI = GUI
-        self.PlayerView = PlayerView(GUI)
+
+        self.handTileSelectionPrompt = "Please select a tile from your hand to play..."
+        self.stackTileSelectionPrompt = "Please select a stack tile to play on..."
+
+        self.handTileSelectionMsg = ""
+        self.stackTileSelectionMsg = ""
 
         # Call base class constructor
         super().__init__(name, color)
@@ -18,9 +22,6 @@ class Human(Player):
         
         # Determine placability of hand tiles
         Decks[playerNum].DetermineHandPlacability(Decks[playerNum].stack, Decks[opponentNum].stack)
-
-        # Create a screen for human to select what tile is chosen 
-        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected, "Please select a tile from your hand to play...")
         
     # Select what stack to place on
     def SelectStackTile(self, Players, Decks, playerNum, opponentNum, tileToPlace):
@@ -33,8 +34,7 @@ class Human(Player):
         Decks[0].ResetHandTileStatus()
         Decks[1].ResetHandTileStatus()
 
-        # Create a screen for human to select what stack to place on
-        self.PlayerView.CreateTileScreen(Players, Decks, playerNum, opponentNum, self.TileSelected, "Please select a stack tile to play on...")
+        
 
     
 

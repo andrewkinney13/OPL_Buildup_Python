@@ -54,16 +54,30 @@ class Round:
                 
                 # Player is selecting from hand to place
                 if(self.Players[self.turnNum].selectingHandTile):
+
+                    # Let them choose the hand tile
                     self.Players[self.turnNum].SelectHandTile(self.Players, self.Decks, self.turnNum, self.opponentNum)
+
+                    # Dsplay tile screen
+                    self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
+                        self.PlayHand, self.Players[self.turnNum].handTileSelectionPrompt, "")
 
                    
                 # Player selects the tile on stack to place on 
                 elif(self.Players[self.turnNum].placingOnStackTile):
+
+                    # Highlight the tile they chose
                     self.Decks[self.turnNum].HighlightHandTile(self.Players[self.turnNum].tileToPlace)
-                    self.Players[self.turnNum].SelectStackTile(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].tileToPlace)
+
+                    # Let them chose the stack tile
+                    self.Players[self.turnNum].SelectStackTile(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].tileToPlace) 
+
+                    # Display the tile screen
+                    self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
+                        self.PlayHand, self.Players[self.turnNum].stackTileSelectionPrompt, self.Players[self.turnNum].handTileSelectionMsg)
                     
             
-                # Tile from hand selected, and stack tile to play on selected, end the turn
+                # Tile from hand selected, and stack tile to play on selected, place the tile and end the turn
                 else:
                     # Find out the position and stack of the tiles
                     stackNum, stackPosition = self.FindStackLocation(self.Players[self.turnNum].tileToPlaceOn)
@@ -74,8 +88,13 @@ class Round:
                     # Remove tile from player's hand
                     self.Decks[self.turnNum].RemoveHandTile(self.Players[self.turnNum].tileToPlace)
 
+                    # Reset the status of the stack tiles
+                    self.Decks[0].ResetStackTileStatus()
+                    self.Decks[1].ResetStackTileStatus()
+
                     # Display finished board
-                    self.Players[self.turnNum].DisplayBoard(self.Players, self.Decks, self.turnNum, self.opponentNum, self.PlayHand, "Board after placement...")
+                    self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
+                        self.PlayHand, "", self.Players[self.turnNum].stackTileSelectionMsg)
 
                     # Reset the player's tiles' status
                     self.Decks[self.turnNum].ResetHighlightedTileStatus()
@@ -88,7 +107,8 @@ class Round:
             else:
 
                 # Create a screen to tell the user a turn is being skipped
-                self.Players[self.turnNum].DisplayBoard(self.Players, self.Decks, self.turnNum, self.opponentNum, self.PlayHand, "No moves availible, skipping turn...")
+                self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
+                        self.PlayHand, "No moves to make, turn being skipped")
 
                 # Change turns 
                 self.ChangeTurns()
@@ -99,8 +119,12 @@ class Round:
             # Add up the scores, get reasoning
             scoresMsg = self.AddUpScores()
 
-            self.Players[self.turnNum].DisplayBoard(self.Players, self.Decks, self.turnNum, self.opponentNum, self.PlayHand, "Hand over, adding up scores based on board below ...", scoresMsg)
+            # Print the board and score msg
+            self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
+                        self.PlayRound, "Hand over, adding up scores...", scoresMsg)
 
+            # Clear hands
+            self.ClearHands()
 
     # See if playable tiles are left in any player's hand
     def PlayableTilesRemain(self):
@@ -186,7 +210,7 @@ class Round:
     # Add up the scores at the end of a hand
     def AddUpScores(self):
 
-        return "msg"
+        return "scores msg here!!"
 
     # Clear the remaining tiles in hand
     def ClearHands(self):

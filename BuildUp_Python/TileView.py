@@ -49,3 +49,8 @@ class TileView:
                                    width = self.tileWidth, height = self.tileHeight, bg = 'black', fg = 'white')
 
         label.pack(side = 'left')
+
+    # Creates a blank tile if no tiles were placed in a subframe
+    def CreateBlankTileLabel(self, frame):
+        label = tk.Label(master = frame, width = self.tileWidth, height = self.tileHeight + 1, bg = 'white', fg = 'white')
+        label.pack(side = 'left')
