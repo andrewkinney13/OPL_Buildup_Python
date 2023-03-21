@@ -36,7 +36,7 @@ class Tile:
         if (not self.IsDouble()):
 
             # Compare values
-            if (self.GetValue() > other.GetValue()):
+            if (self.GetValue() >= other.GetValue()):
                 return True
 
             else:

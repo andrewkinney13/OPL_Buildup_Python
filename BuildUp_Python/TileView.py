@@ -27,7 +27,7 @@ class TileView:
 
         button.pack(side = 'left')
 
-    # Creates Tile label (non-pickable / non-placeable tile)
+    # Creates Tile label (non-pickable / non-placaable tile)
     def CreateTileLabel(self, tile, frame):
 
         # Highlighted
@@ -52,5 +52,5 @@ class TileView:
 
     # Creates a blank tile if no tiles were placed in a subframe
     def CreateBlankTileLabel(self, frame):
-        label = tk.Label(master = frame, width = self.tileWidth, height = self.tileHeight + 1, bg = 'white', fg = 'white')
+        label = tk.Button(master = frame, text = " ", font = self.tileFont, width = self.tileWidth, height = self.tileHeight, bg = 'white', fg = 'white')
         label.pack(side = 'left')

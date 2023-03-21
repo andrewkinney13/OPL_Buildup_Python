@@ -49,7 +49,7 @@ class GUI():
     def CreateBottomMenuLabel(self, text):
 
         # Create the label
-        label = tk.Label(text = text, width = self.defaultWidth, height = 7, font = self.defaultFont)
+        label = tk.Label(text = text, width = self.defaultWidth + 10, height = 7, font = self.defaultFont)
         label.pack(side = "bottom", fill = "y")
 
     # Creates regular menu label
@@ -119,8 +119,8 @@ class GUI():
         opponentMainFrame = self.CreateMainFrame("right")
 
         # Create subframes and labels for player's names
-        self.CreateNameFrames(playerMainFrame, Players[playerNum].name)
-        self.CreateNameFrames(opponentMainFrame, Players[opponentNum].name)
+        self.CreateNameFrames(playerMainFrame, Players[playerNum].name, Players[playerNum].color)
+        self.CreateNameFrames(opponentMainFrame, Players[opponentNum].name, Players[opponentNum].color)
 
         # Create deck view object
         myDeckView = DeckView(self)
@@ -143,13 +143,13 @@ class GUI():
 
 
     # Creates subframes and labels for players names
-    def CreateNameFrames(self, mainFrame, name):
+    def CreateNameFrames(self, mainFrame, name, color):
         
         # Create subframe
         subFrame = self.CreateSubFrame(mainFrame)
         
         # Create label for the player's name
-        self.CreateFrameMenuLabel("Name: " + str(name), subFrame)
+        self.CreateFrameMenuLabel("Name: " + str(name) + " (" + color + ")", subFrame)
 
     # Creates subframes and labels for players attributes (score, rounds won)
     def CreatePlayerAttributeFrames(self, mainFrame, player):

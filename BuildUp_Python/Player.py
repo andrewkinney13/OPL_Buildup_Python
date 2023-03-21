@@ -47,7 +47,7 @@ class Player:
 
         # Selecting stack tile
         elif(self.placingOnStackTile):
-            self.placingOnStackTile = False
+            self.selectingOnStackTile = False
             self.tileToPlaceOn = tile
 
         # Return to play hand
