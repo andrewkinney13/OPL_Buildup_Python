@@ -62,8 +62,8 @@ class Round:
                     self.Players[self.turnNum].SelectHandTile(self.Players, self.Decks, self.turnNum, self.opponentNum)
 
                     # Dsplay tile screen
-                    self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
-                        self.PlayHand, self.Players[self.turnNum].handTileSelectionPrompt, "")
+                    self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, self.PlayHand, self.AskingHelp, \
+                        self.Players[self.turnNum].handTileSelectionPrompt, "")
 
                    
                 # Player selects the tile on stack to place on 
@@ -76,8 +76,8 @@ class Round:
                     self.Players[self.turnNum].SelectStackTile(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].tileToPlace) 
 
                     # Display the tile screen
-                    self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
-                        self.PlayHand, self.Players[self.turnNum].stackTileSelectionPrompt, self.Players[self.turnNum].handTileSelectionMsg)
+                    self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected,  self.PlayHand, self.AskingHelp, \
+                        self.Players[self.turnNum].stackTileSelectionPrompt, self.Players[self.turnNum].handTileSelectionMsg)
                     
             
                 # Tile from hand selected, and stack tile to play on selected, place the tile and end the turn
@@ -96,8 +96,8 @@ class Round:
                     self.Decks[1].ResetStackTileStatus()
 
                     # Display finished board
-                    self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
-                        self.PlayHand, "", self.Players[self.turnNum].stackTileSelectionMsg)
+                    self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, self.PlayHand, self.AskingHelp, \
+                         "", self.Players[self.turnNum].stackTileSelectionMsg)
 
                     # Reset the player's tiles' status
                     self.Decks[self.turnNum].ResetHighlightedTileStatus()
@@ -110,8 +110,8 @@ class Round:
             else:
 
                 # Create a screen to tell the user a turn is being skipped
-                self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
-                        self.PlayHand, "No moves to make, turn being skipped")
+                self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, self.PlayHand, self.AskingHelp, \
+                         "No moves to make, turn being skipped")
 
                 # Change turns 
                 self.ChangeTurns()
@@ -123,8 +123,8 @@ class Round:
             scoresMsg = self.AddUpScores()
 
             # Print the board and score msg
-            self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
-                        self.PlayRound, "Hand over, adding up scores...", scoresMsg)
+            self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, self.PlayRound, self.AskingHelp, \
+                         "Hand over, adding up scores...", scoresMsg)
 
             # Clear hands
             self.ClearHands()
@@ -172,6 +172,12 @@ class Round:
             self.Players[1].SetTheirTurn(False)
             self.turnNum = 0
             self.opponentNum = 1
+            
+        # Reset the help boolean
+        for playerNum in range(len(self.Players)):
+            if (self.Players[playerNum].givesAdvice == False):
+                self.Players[playerNum].askedForHelp = False
+
 
     # Resets all of the players attrubutes
     def ResetPlayers(self):
@@ -226,8 +232,8 @@ class Round:
                 tileNum += 1
 
         # print screen showing what happend 
-        self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, \
-                        self.PlayHand, "Determining first turn based on hand tile scores", turnName + " had the highest first hand tile...\nThey go first!")
+        self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, self.PlayHand, self.AskingHelp, \
+                        "Determining first turn based on hand tile scores", turnName + " had the highest first hand tile...\nThey go first!")
 
         # start game
         self.GUI.StartInputLoop()
@@ -397,4 +403,22 @@ class Round:
         for tileNum in range(len(self.Decks[self.opponentNum].stack)):
             if (tile == self.Decks[self.opponentNum].stack[tileNum]):
                 return (self.opponentNum, tileNum)
+
+    # Computer gives advice for human player
+    def AskingHelp(self):
+
+        # Only help one time per turn
+        self.Players[self.turnNum].askedForHelp = True
+        
+        # Run computer's logic function w/ helping enabled and player's data
+        self.Players[self.opponentNum].TileSelectionLogic(self.Decks, self.turnNum, self.opponentNum, helping = True)
+
+        # Aquire it's opinions and cat them
+        msg = ""
+        msg += self.Players[self.opponentNum].handTileSelectionMsg + "\n" + self.Players[self.opponentNum].stackTileSelectionMsg
+
+        # Create a screen with computer's advice
+        self.GUI.CreateTileScreen(self.Players, self.Decks, self.turnNum, self.opponentNum, self.Players[self.turnNum].TileSelected, self.AskingHelp, \
+                        self.PlayHand, "Please select a tile from your hand to play...", msg)
+    
         

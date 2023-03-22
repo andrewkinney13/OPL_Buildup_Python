@@ -49,7 +49,7 @@ class GUI():
     def CreateBottomMenuLabel(self, text):
 
         # Create the label
-        label = tk.Label(text = text, width = self.defaultWidth + 10, height = 7, font = self.defaultFont)
+        label = tk.Label(text = text, width = self.defaultWidth + 30, height = 7, font = self.defaultFont)
         label.pack(side = "bottom", fill = "y")
 
     # Creates regular menu label
@@ -95,7 +95,7 @@ class GUI():
     """
 
     # Creates a screen asking user what tile from their hand to select
-    def CreateTileScreen(self, Players, Decks, playerNum, opponentNum, TileFunction, ContinueFunction,  topMsg = None, bottomMsg = None):
+    def CreateTileScreen(self, Players, Decks, playerNum, opponentNum, TileFunction, ContinueFunction, HelpFunction,  topMsg = "", bottomMsg = ""):
 
         # Clear the window
         self.ClearWindow()
@@ -140,6 +140,10 @@ class GUI():
         # Create a continue button if the moves have been made or no tiles selectable
         if(not Players[playerNum].selectingHandTile and not Players[playerNum].placingOnStackTile or self.NoSelectableTiles(playerNum, opponentNum, Decks)):
             self.CreateFrameMenuButton("Continue", ContinueFunction, playerMainFrame, fg = "white", bg = "green")
+
+        # Create a button for helping, if this player can ask for, and the other player can give advicce
+        elif(Players[playerNum].givesAdvice == False and Players[opponentNum].givesAdvice and Players[playerNum].selectingHandTile and Players[playerNum].askedForHelp == False):
+            self.CreateFrameMenuButton("Ask for Help", HelpFunction, playerMainFrame, fg = "white", bg = "orange")
 
 
     # Creates subframes and labels for players names

@@ -14,6 +14,9 @@ class Human(Player):
         self.handTileSelectionMsg = ""
         self.stackTileSelectionMsg = ""
 
+        self.givesAdvice = False
+        self.askedForHelp = False
+
         # Call base class constructor
         super().__init__(name, color)
 
