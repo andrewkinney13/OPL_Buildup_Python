@@ -22,16 +22,12 @@ class Player:
         self.PlayHandFunction = None
 
     # Sets their turn, and relevent booleans 
-    def SetTheirTurn(self, theirTurn):
-        if(theirTurn):
-            self.isTheirTurn = True
-            self.selectingHandTile = True
-            self.placingOnStackTile = True
+    def SetTheirTurn(self, turnStatus):
+        
+        self.isTheirTurn = turnStatus
+        self.selectingHandTile = turnStatus
+        self.placingOnStackTile = turnStatus
 
-        else:
-            self.isTheirTurn = False
-            self.selectingHandTile = False
-            self.placingOnStackTile = False
        
     # Assign play round function
     def SetPlayHandFunction(self, PlayHand):
@@ -47,7 +43,7 @@ class Player:
 
         # Selecting stack tile
         elif(self.placingOnStackTile):
-            self.selectingOnStackTile = False
+            self.placingOnStackTile = False
             self.tileToPlaceOn = tile
 
         # Return to play hand

@@ -6,18 +6,29 @@ class RoundView:
         self.GUI = GUI
 
     # End of round screen
-    def AskNewRound(self, winnerNum, winnerMsg, EndTournament, PlayRound):
+    def AskNewRound(self, winnerMsg, EndTournamentFunction, PlayRoundFunction):
         
         # Clear the window
         self.GUI.ClearWindow()
 
         # Alert player who won
         self.GUI.CreateMenuLabel("Round Over...")
-        self.GUI.CreateMenuLabel(str(winnerNum) + " won the round!\n" + winnerMsg)
+        self.GUI.CreateBottomMenuLabel(winnerMsg)
 
         # Give options how to continue
-        self.GUI.CreateMenuButton("Play New Round", PlayRound, fg = "white", bg = "green")
-        self.GUI.CreateMenuButton("Exit", EndTournament, fg = "white", bg = "red")
-        
+        self.GUI.CreateMenuButton("Play New Round", PlayRoundFunction, fg = "white", bg = "green")
+        self.GUI.CreateMenuButton("Exit", EndTournamentFunction, fg = "white", bg = "red")
+
+    def EndTournament(self, winnerMsg):
+
+        # Clear the window
+        self.GUI.ClearWindow()
+
+        # Alert player who won
+        self.GUI.CreateMenuLabel("Tournament Over...")
+        self.GUI.CreateBottomMenuLabel(winnerMsg)
+
+        # Give options how to continue
+        self.GUI.CreateMenuButton("Exit", exit, fg = "white", bg = "red")
 
  

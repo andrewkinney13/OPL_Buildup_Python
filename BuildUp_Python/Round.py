@@ -38,10 +38,13 @@ class Round:
             self.ClearStacks()
 
             # Determine the winner of the round
-            winnerNum, winnerMsg = self.DetermineWinner()
+            winnerMsg = self.DetermineWinner()
+
+            # Reset scores and turns
+            self.ResetPlayers()
 
             # Create a screen asking if user wants to play another hand
-            self.RoundView.AskNewRound(winnerNum, winnerMsg, self.EndTournament, self.PlayRound) 
+            self.RoundView.AskNewRound(winnerMsg, self.EndTournament, self.PlayRound) 
         
     # Play hand of buildup until no playable tiles remain
     def PlayHand(self):
@@ -169,6 +172,15 @@ class Round:
             self.Players[1].SetTheirTurn(False)
             self.turnNum = 0
             self.opponentNum = 1
+
+    # Resets all of the players attrubutes
+    def ResetPlayers(self):
+
+        for playerNum in range(len(self.Players)):
+            self.Players[playerNum].SetTheirTurn(False)
+            self.Players[playerNum].score = 0
+            
+
 
     # Assigns first turn based on first hand tile value, if not assigned already by serialization
     def SetFirstTurn(self):
@@ -322,27 +334,59 @@ class Round:
     # Determines who won the round, adds a win to their score, returns the player number of who one
     def DetermineWinner(self):
 
+        # Configure message
+        retMessage = ""
+        
+        for playerNum in range(len(self.Players)):
+            retMessage += self.Players[playerNum].name + "'s final score is: " + str(self.Players[playerNum].score) + "\n"
+
+        retMessage += "Therefore, "
+
         # Player 0 won
         if self.Players[0].score > self.Players[1].score:
             self.Players[0].roundsWon += 1
-            return (0, "haha0")
+            retMessage += self.Players[0].name + " wins the round!"
 
         # Players 1 won
         elif self.Players[1].score > self.Players[0].score:
             self.Players[1].roundsWon += 1
-            return (0, "haha1")
+            retMessage += self.Players[1].name + " wins the round!"
 
         # Tie
         else:
-            return (None, "tie!")
-            
-    # Returns to the tournament class
-    def EndTournament(self):
-        self.EndTournament()
+            retMessage += "The round concludes in a tie!"
 
-    # Sets the return to tournament function
-    def SetEndTournamentFunction(self, endFunction):
-        self.EndTournamentFunc = endFunction
+        return retMessage
+            
+    # Determines winner of the tournament and then exits the program
+    def EndTournament(self):
+        
+        # Determine the winner of the tournament 
+        msg = ""
+
+        for playerNum in range(len(self.Players)):
+            retMessage += self.Players[playerNum].name + " won " + str(self.Players[playerNum].roundsWon) + " rounds\n"
+
+        retMessage += "Therefore, "
+
+        # Player 0 won
+        if self.Players[0].score > self.Players[1].score:
+            self.Players[0].roundsWon += 1
+            retMessage += self.Players[0].name + " wins the tournament!"
+
+        # Players 1 won
+        elif self.Players[1].score > self.Players[0].score:
+            self.Players[1].roundsWon += 1
+            retMessage += self.Players[1].name + " wins the tournament!"
+
+        # Tie
+        else:
+            retMessage += "The tournament concludes in a tie!"
+
+        # Display the winner
+        self.RoundView.EndTournament(msg)
+
+
 
     # Finds what stack and where a tile is
     def FindStackLocation(self, tile):

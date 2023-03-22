@@ -86,7 +86,7 @@ class DeckView:
         count = 0
         for tile in range(len(deck.boneyard)):
             
-            # Keep track of how many tiles placed, make it so only 6 rows are made of boneyard tiles
+            # Keep track of how many tiles placed, make it so only 6 rows max are made of boneyard tiles
             if (count > len(deck.boneyard) / 6):
                 subFrame = self.GUI.CreateSubFrame(mainFrame)
                 count = 0
@@ -95,4 +95,8 @@ class DeckView:
 
             # Create the tile
             self.TileView.CreateTileLabel(deck.boneyard[tile], subFrame)
+
+        # If no tiles in boneyard, just print a blank tile 
+        if len(deck.boneyard) == 0:
+            self.TileView.CreateBlankTileLabel(subFrame)
 

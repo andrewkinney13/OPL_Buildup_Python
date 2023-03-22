@@ -21,6 +21,7 @@ class Tournament:
         self.Players = []
         self.Decks = []
 
+
     # Starts Tournament, just initalizes everything
     def StartTournament(self):
         
@@ -30,9 +31,11 @@ class Tournament:
     # Plays rounds of buildup 
     def PlayTournament(self):
         
+        # Initalizes round object
+        self.myRound = Round(self.Players, self.Decks, self.GUI)
+
         # Plays a round of buildup
-        myRound = Round(self.Players, self.Decks, self.GUI)
-        myRound.PlayRound()
+        self.myRound.PlayRound()
        
     def EndTournament(self):
         # Tournament over, determine the winner and exit
@@ -101,20 +104,6 @@ class Tournament:
         self.GUI.CreateButton("yes", self.PlayTournament, color = "green")
         self.GUI.CreateButton("no", self.FinalScreen, color = "red")
 
-    # Determine the winner of the tournament
-    def DetermineWinner(self):
-        
-         # Player 0 won
-        if self.Players[0].roundsWon > self.Players[1].roundsWon:
-            return 0
-
-        # Players 1 won
-        elif self.Players[1].roundsWon > self.Players[0].roundsWon:
-            return 1
-
-        # Tie
-        else:
-            return None
 
 
 
