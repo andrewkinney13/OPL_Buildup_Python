@@ -17,7 +17,7 @@ class RoundView:
 
         # Give options how to continue
         self.GUI.CreateMenuButton("Play New Round", PlayRoundFunction, fg = "white", bg = "green")
-        self.GUI.CreateMenuButton("Exit", EndTournamentFunction, fg = "white", bg = "red")
+        self.GUI.CreateMenuButton("End Tournament", EndTournamentFunction, fg = "white", bg = "red")
 
     def EndTournament(self, winnerMsg):
 

@@ -367,25 +367,22 @@ class Round:
         for playerNum in range(len(self.Players)):
             msg += self.Players[playerNum].name + " won " + str(self.Players[playerNum].roundsWon) + " rounds\n"
 
-        retMessage += "Therefore, "
+        msg += "Therefore, "
 
         # Player 0 won
-        if self.Players[0].score > self.Players[1].score:
-            self.Players[0].roundsWon += 1
+        if self.Players[0].roundsWon > self.Players[1].roundsWon:
             msg += self.Players[0].name + " wins the tournament!"
 
         # Players 1 won
-        elif self.Players[1].score > self.Players[0].score:
-            self.Players[1].roundsWon += 1
+        elif self.Players[1].roundsWon > self.Players[0].roundsWon:
             msg += self.Players[1].name + " wins the tournament!"
 
         # Tie
         else:
-            msg += "The tournament concludes in a tie!"
+            msg += "the tournament concludes in a tie!"
 
         # Display the winner
         self.RoundView.EndTournament(msg)
-
 
 
     # Finds what stack and where a tile is
