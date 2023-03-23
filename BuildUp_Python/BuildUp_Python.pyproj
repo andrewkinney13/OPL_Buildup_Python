@@ -35,6 +35,13 @@
     <Compile Include="GUI.py" />
     <Compile Include="TournamentView.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="fifth.txt" />
+    <Content Include="first.txt" />
+    <Content Include="fourth.txt" />
+    <Content Include="second.txt" />
+    <Content Include="third.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in

@@ -13,7 +13,7 @@ class GUI():
         # Initalize window
         self.root = tk.Tk()
         self.root.title("Andrew Kinney's BuildUp Program for OPL")
-        self.root.geometry("900x900")
+        self.root.geometry("1000x900")
 
     # Starts input-driven window
     def StartInputLoop(self):
@@ -41,8 +41,14 @@ class GUI():
     # Creates regular label 
     def CreateMenuLabel(self, text):
 
-       # Create the label
+        # Create the label
         label = tk.Label(text = text, width = self.defaultWidth, height = self.defaultHeight, font = self.defaultFont)
+        label.pack()
+
+    # Create large label
+    def CreateBigMenuLabel(self, text):
+        # Create the label
+        label = tk.Label(text = text, width = self.defaultWidth + 15, height = self.defaultHeight + 2, font = self.defaultFont)
         label.pack()
 
     # Creates a label on the bottom of the screen
@@ -85,14 +91,13 @@ class GUI():
     def GetSaveFunction(self):
         return self.SaveFunction
 
-
-    """
-       # Creates entry box with default attributes
+    # Creates entry box with default attributes
     def CreateEntry(self):
-        entry = tk.Entry(width = self.tileWidth, font = self.defaultFont)
+
+        entry = tk.Entry(width = 20, font = self.defaultFont)
         entry.pack()
         return entry
-    """
+
 
     # Creates a screen asking user what tile from their hand to select
     def CreateTileScreen(self, Players, Decks, playerNum, opponentNum, TileFunction, ContinueFunction, HelpFunction,  topMsg = "", bottomMsg = ""):

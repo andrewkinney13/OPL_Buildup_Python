@@ -5,7 +5,7 @@ import random
 class Deck:
 
     # Constructor
-    def __init__(self, tileSetSize):
+    def __init__(self, tileSetSize = 6):
         self.boneyard = []
         self.stack = []
         self.hand = []

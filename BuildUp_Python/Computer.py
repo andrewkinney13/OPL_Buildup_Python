@@ -124,7 +124,7 @@ class Computer(Player):
                             self.stackTileSelectionMsg = "Computer reccomends placing it on " + self.tileToPlaceOn.GetStringForm() + " because it is your lowest valued\n stack tile (to preserve points)"
 
                         else:
-                            self.handTileSelectionMsg = "Computer chose to select"  + self.tileToPlace.GetStringForm()  + " because it is the lowest valued\n tile in their hand that can be played on a stack"
+                            self.handTileSelectionMsg = "Computer chose to select "  + self.tileToPlace.GetStringForm()  + " because it is the lowest valued\n tile in their hand that can be played on a stack"
                             self.stackTileSelectionMsg = "Computer chose to place " + self.tileToPlace.GetStringForm() + " on " + self.tileToPlaceOn.GetStringForm() + " because that is their lowest valued\n stack tile (to preserve points)"
 
                             break

@@ -6,6 +6,7 @@ from Human import Human
 from Computer import Computer
 from Deck import Deck
 from Round import Round
+from Tile import Tile
 
 class Tournament:
 
@@ -26,7 +27,7 @@ class Tournament:
     def StartTournament(self):
         
         # Create the inital menu asking how to start the game
-        self.TournamentView.StartMenu(self.DeclareHuamnComputerGame, self.DeclareHumanHumanGame, self.DeclareComputerComputerGame, self.LoadSerializationFile)
+        self.TournamentView.StartMenu(self.DeclareHuamnComputerGame, self.DeclareHumanHumanGame, self.DeclareComputerComputerGame, self.AskSerializationFileName)
 
     # Plays rounds of buildup 
     def PlayTournament(self):
@@ -56,8 +57,8 @@ class Tournament:
     def DeclareHumanHumanGame(self):
 
         # Initalize 2 human players
-        self.Players.append(Human('Human 1', "B", self.GUI))
-        self.Players.append(Human('Human 2', "W", self.GUI))
+        self.Players.append(Human('Human_1', "B", self.GUI))
+        self.Players.append(Human('Human_2', "W", self.GUI))
 
         # Ask for size of domino set
         self.TournamentView.AskDominoSetSize(self.DeclareDecks)
@@ -66,19 +67,170 @@ class Tournament:
     def DeclareComputerComputerGame(self):
 
         # Initalize 2 human players
-        self.Players.append(Computer('Computer 1', "B", self.GUI))
-        self.Players.append(Computer('Computer 2', "W", self.GUI))
+        self.Players.append(Computer('Computer_1', "B", self.GUI))
+        self.Players.append(Computer('Computer_2', "W", self.GUI))
 
         # Ask for size of domino set
         self.TournamentView.AskDominoSetSize(self.DeclareDecks)
 
-    # Initalize game state from serialization file
-    def LoadSerializationFile(self):
+    # Aquire the name of the seriaization file
+    def AskSerializationFileName(self, invalidFileName = False):
 
-        # Load in file, assign attributes
+        # Ask the user to enter the name of the serialization file
+        self.TournamentView.AskFileName(self.LoadGame, invalidFileName)
 
-        # Play Tournament
-        self.PlayTournament()
+    # Load a game from serialization file
+    def LoadGame(self, fileName):
+ 
+        # Try to open the file, if unable, re ask user
+        fileFound = False
+        while not fileFound:
+            try: 
+                file = open(fileName, "r")
+                contents = file.read()
+                file.close()
+                fileFound = True
+
+            except FileNotFoundError:
+                self.AskSerializationFileName(invalidFileName = True)
+
+        # File opened successfuly, load game state
+        else:
+            playerCount = 0
+            lineList = []
+
+            for line in contents.splitlines():
+                lineList.append(line)
+
+            # Go through every line
+            lineNum = 0
+            while lineNum < len(lineList) - 2:
+
+                # Init computer
+                if lineList[lineNum] == "Computer:":
+                    self.Players.append(Computer("Computer", "W", self.GUI))
+
+                # Init human
+                elif lineList[lineNum] == "Human:":
+                    self.Players.append(Human("Human", "B", self.GUI))
+
+                # Init computer 1
+                elif lineList[lineNum] == "Computer_1:":
+                    self.Players.append(Computer(lineList[lineNum], "B", self.GUI))
+
+                # Init human 1
+                elif lineList[lineNum] == "Human_1:":
+                    self.Players.append(Computer(lineList[lineNum], "B", self.GUI))
+
+                # Init computer 2
+                elif lineList[lineNum] == "Computer_2:":
+                    self.Players.append(Computer(lineList[lineNum], "W", self.GUI))
+
+                # Init human 2
+                elif lineList[lineNum] == "Human_2:":
+                    self.Players.append(Human(lineList[lineNum], "W", self.GUI))
+
+                # Increment line num (account for getting name)
+                lineNum += 1
+
+                # Init deck
+                self.Decks.append(Deck())
+
+                # Initalize all the data for the player, update linenum
+                lineNum = self.SerializePlayer(playerCount, lineList, lineNum)
+
+                # Account for new line in between player data 
+                lineNum += 1
+                playerCount += 1
+
+            # Last line, find out whose turn it is
+            turnVal = ""
+            turnLine = lineList[lineNum]
+            for word in turnLine.split(" "):
+
+                # skip header
+                if word == "Turn:" or word == "":
+                    continue
+
+                # access tile values
+                turnVal = word
+                
+            # Assign the turn to the appropriate player
+            for playerNum in range(len(self.Players)):
+                
+                if self.Players[playerNum].name == turnVal:
+                    self.Players[playerNum].isTheirTurn = True
+
+            # Everything loaded in, play the tournament!
+            self.PlayTournament()
+            
+        
+    # Initalize a players attributes based on serialization file
+    def SerializePlayer(self, playerNum, lineList, lineNum):
+        
+        # Initalize the stack
+        stackLine = lineList[lineNum]
+        for word in stackLine.split(" "):
+
+            # skip header
+            if word == "Stacks:" or word == "":
+                continue
+
+            # access tile values
+            self.Decks[playerNum].stack.append(Tile(word[0], int(word[1]), int(word[2])))
+        lineNum += 1
+
+        # Initalize the boneyard
+        boneyardLine = lineList[lineNum]
+        for word in boneyardLine.split(" "):
+
+            # skip header
+            if word == "Boneyard:" or word == "":
+                continue
+
+            # access tile values
+            self.Decks[playerNum].boneyard.append(Tile(word[0], int(word[1]), int(word[2])))
+        lineNum += 1
+
+        # Initalize the hand
+        handLine = lineList[lineNum]
+        for word in handLine.split(" "):
+
+            # skip header
+            if word == "Hand:" or word == "":
+                continue
+
+            # access tile values
+            self.Decks[playerNum].hand.append(Tile(word[0], int(word[1]), int(word[2])))
+        lineNum += 1
+        
+        # Initalize the score
+        scoreLine = lineList[lineNum]
+        for word in scoreLine.split(" "):
+
+            # skip header
+            if word == "Score:" or word == "":
+                continue
+
+            # access tile values
+            self.Players[playerNum].score = int(word)
+        lineNum += 1
+
+        # Initalize the rounds won
+        roundLine = lineList[lineNum]
+        for word in roundLine.split(" "):
+
+            # skip header
+            if word == "Rounds" or word == "Won:" or word == "":
+                continue
+
+            # access tile values
+            self.Players[playerNum].roundsWon = int(word)
+        lineNum += 1
+        
+        return lineNum
+        
+
 
     # Save the game to text file
     def SaveGame(self):

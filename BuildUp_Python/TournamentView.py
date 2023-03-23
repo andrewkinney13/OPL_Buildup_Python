@@ -34,6 +34,34 @@ class TournamentView:
         self.GUI.CreateMenuButton("Double-nine", lambda: (DeclareDecks(9)))
 
     
+    # Ask the user to enter the name of the serialization file
+    def AskFileName(self, loadGame, invalidFileName = False):
+
+        # Clear the window
+        self.GUI.ClearWindow()
+
+        # Create label asking for user to enter file name
+        self.GUI.CreateMenuLabel("Seralization file name: ")
+
+        # Create textbox to enter name
+        entryBox = self.GUI.CreateEntry()
+
+        # Make a button to enter the text
+        self.GUI.CreateMenuButton("Enter", lambda: (self.GetEntryText(entryBox, loadGame)), fg = "white", bg = "green")
+
+        # If this is the second+ time running, tell remind the user to enter a proper file name
+        if invalidFileName:
+            self.GUI.CreateMenuLabel("Invalid file name! Try again...")
+
+        # Wait for user to continue
+        self.GUI.StartInputLoop()
+
+        
+    # Obtains text from an entry box
+    def GetEntryText(self, entryBox, returnFunction):
+         text = entryBox.get()
+         returnFunction(text)
+
     # Exit screen
     def ExitScreen(self, winnerNum):
 

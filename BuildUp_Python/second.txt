@@ -1,0 +1,15 @@
+Computer:
+   Stacks: B44 W25 B36 W33 B55 W15
+   Boneyard: W00 W46 W23 W45 W56 W02 W13 W14 W12 W35 W03 W66 W05 W06 W55 W34 
+   Hand: W01 W11
+   Score: 0
+   Rounds Won: 0
+
+Human:
+   Stacks: W04 B15 W26 B22 W44 B34
+   Boneyard: B16 B00 B23 B66 B13 B26 B01 B33 B14 B45 B24 B02 B46 B05 B11 B56 
+   Hand: B03
+   Score: 0
+   Rounds Won: 1
+
+Turn: Computer

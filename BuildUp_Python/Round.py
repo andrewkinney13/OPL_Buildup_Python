@@ -195,6 +195,7 @@ class Round:
         for playerNum in range(2):
             if (self.Players[playerNum].isTheirTurn):
                 self.turnNum = playerNum
+                self.Players[playerNum].SetTheirTurn(True)
 
                 if (self.turnNum == 0):
                     self.opponentNum = 1

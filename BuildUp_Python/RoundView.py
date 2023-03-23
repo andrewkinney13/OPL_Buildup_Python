@@ -13,7 +13,7 @@ class RoundView:
 
         # Alert player who won
         self.GUI.CreateMenuLabel("Round Over...")
-        self.GUI.CreateBottomMenuLabel(winnerMsg)
+        self.GUI.CreateBigMenuLabel(winnerMsg + "\n")
 
         # Give options how to continue
         self.GUI.CreateMenuButton("Play New Round", PlayRoundFunction, fg = "white", bg = "green")
@@ -26,7 +26,7 @@ class RoundView:
 
         # Alert player who won
         self.GUI.CreateMenuLabel("Tournament Over...")
-        self.GUI.CreateBottomMenuLabel(winnerMsg)
+        self.GUI.CreateBigMenuLabel(winnerMsg + "\n")
 
         # Give options how to continue
         self.GUI.CreateMenuButton("Exit", exit, fg = "white", bg = "red")
