@@ -1,7 +1,5 @@
 
-from GUI import GUI
 from TournamentView import TournamentView
-from Player import Player
 from Human import Human
 from Computer import Computer
 from Deck import Deck
@@ -230,12 +228,61 @@ class Tournament:
         
         return lineNum
         
-
-
     # Save the game to text file
     def SaveGame(self):
-        exit()
 
+        # Create a text file
+        fileName = "savedBuildup.txt"
+        file = open(fileName, "w")
+
+        # Write the data to the file
+        for playerNum in range(len(self.Players)):
+
+            # Write their name
+            file.write(self.Players[playerNum].name + ":\n")
+
+            # Write their stacks
+            file.write("    Stacks: ")
+            for tileNum in range(len(self.Decks[playerNum].stack)):
+                file.write(self.Decks[playerNum].stack[tileNum].GetStringForm() + " ")
+            file.write("\n")
+
+            # Write their boneyards
+            file.write("    Boneyard: ")
+            for tileNum in range(len(self.Decks[playerNum].boneyard)):
+                file.write(self.Decks[playerNum].boneyard[tileNum].GetStringForm() + " ")
+            file.write("\n")
+
+            # Write their hands 
+            file.write("    Hand: ")
+            for tileNum in range(len(self.Decks[playerNum].hand)):
+                file.write(self.Decks[playerNum].hand[tileNum].GetStringForm() + " ")
+            file.write("\n")
+
+            # Write their score
+            file.write("    Score: " + str(self.Players[playerNum].score))
+            file.write("\n")
+
+            # Write their rounds won
+            file.write("    Rounds Won: " + str(self.Players[playerNum].roundsWon))
+            file.write("\n\n")
+            
+        # Write the turn status
+        file.write("Turn: ")
+
+        if (self.Players[0].isTheirTurn):
+            file.write(self.Players[0].name)
+
+        else:
+            file.write(self.Players[1].name)
+
+        # Close the file
+        file.close()
+
+        # Alert the user, ask to exit
+        self.TournamentView.SavedScreen(fileName)
+
+        
     # Set deck w/ domino set size
     def DeclareDecks(self, tileSetSize):
 
@@ -253,8 +300,8 @@ class Tournament:
 
         # Ask the user
         self.GUI.CreateLabel("Round over, play another round?")
-        self.GUI.CreateButton("yes", self.PlayTournament, color = "green")
-        self.GUI.CreateButton("no", self.FinalScreen, color = "red")
+        self.GUI.CreateButton("New Round", self.PlayTournament, color = "green")
+        self.GUI.CreateButton("End Tournament", self.FinalScreen, color = "red")
 
 
 

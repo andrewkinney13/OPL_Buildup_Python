@@ -1,6 +1,5 @@
 
 from RoundView import RoundView
-from Tile import Tile
 
 class Round:
     # Constructor

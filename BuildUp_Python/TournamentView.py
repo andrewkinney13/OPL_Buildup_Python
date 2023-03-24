@@ -77,3 +77,13 @@ class TournamentView:
 
         # Exit button
         self.GUI.CreateMenuButton("Exit", exit)
+
+    # Saved screen
+    def SavedScreen(self, fileName):
+
+        # Clear the screen
+        self.GUI.ClearWindow()
+
+        # Ask to exit
+        self.GUI.CreateMenuLabel("Saving...\nSave file created, named: '" + fileName + "'")
+        self.GUI.CreateMenuButton("Exit", exit, fg = "white", bg = "red")
