@@ -1,15 +1,15 @@
-Human_1::
-    Stacks: B46 B03 B36 B14 B35 B00 
-    Boneyard: B33 B02 B24 B23 B45 B11 B44 B66 B25 B12 B55 B26 B16 B04 B56 B34 
-    Hand: B06 B01 B05 B15 B13 B22 
-    Score: 0
+Computer_1:
+    Stacks: B88 B17 B05 B27 B22 B55 
+    Boneyard: B02 B46 B18 B36 B04 B08 B67 B38 B11 B26 B35 B66 B14 B23 B01 B77 B45 B44 B37 B34 B33 B12 B28 B78 B06 B16 B24 
+    Hand: B13 B47 B07 B56 B58 B68 
+    Score: 52
     Rounds Won: 0
 
-Human_2::
-    Stacks: W05 W24 W35 W11 W26 W02 
-    Boneyard: W00 W12 W14 W01 W04 W46 W06 W34 W13 W22 W66 W55 W03 W16 W44 W36 
-    Hand: W15 W33 W23 W45 W25 W56 
-    Score: 0
+Computer_2:
+    Stacks: W12 W01 W04 W00 W34 W11 
+    Boneyard: W35 W24 W36 W28 W33 W37 W68 W27 W38 W66 W45 W22 W25 W06 W05 W15 W46 W14 W03 W67 W56 W13 W77 W78 W17 W55 W57 
+    Hand: W23 W08 W44 W18 W88 W26 
+    Score: 17
     Rounds Won: 0
 
-Turn: Human_2:
+Turn: Computer_2
