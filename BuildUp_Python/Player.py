@@ -1,4 +1,13 @@
 
+"""
+     ************************************************************
+     * Name:  Andrew Kinney                                     *
+     * Project:  BuildUp, Python Version                        *
+     * Class:  Player                                           *
+     * Date:  3.25/2023                                         *
+     ************************************************************
+"""
+
 from tkinter.font import names
 from Tile import Tile
 from Deck import Deck

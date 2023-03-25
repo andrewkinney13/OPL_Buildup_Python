@@ -1,4 +1,13 @@
 
+"""
+     ************************************************************
+     * Name:  Andrew Kinney                                     *
+     * Project:  BuildUp, Python Version                        *
+     * Class:  Tournament View                                  *
+     * Date:  3.25/2023                                         *
+     ************************************************************
+"""
+
 class TournamentView:
 
     # Constructor

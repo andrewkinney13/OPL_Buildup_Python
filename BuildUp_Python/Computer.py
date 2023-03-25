@@ -1,3 +1,13 @@
+
+"""
+     ************************************************************
+     * Name:  Andrew Kinney                                     *
+     * Project:  BuildUp, Python Version                        *
+     * Class:  Computer                                         *
+     * Date:  3.25/2023                                         *
+     ************************************************************
+"""
+
 from Player import Player
 
 class Computer(Player):

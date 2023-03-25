@@ -1,4 +1,13 @@
 
+"""
+     ************************************************************
+     * Name:  Andrew Kinney                                     *
+     * Project:  BuildUp, Python Version                        *
+     * Class:  Round                                            *
+     * Date:  3.25/2023                                         *
+     ************************************************************
+"""
+
 from RoundView import RoundView
 
 class Round:

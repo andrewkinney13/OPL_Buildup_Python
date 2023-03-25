@@ -1,4 +1,13 @@
 
+"""
+     ************************************************************
+     * Name:  Andrew Kinney                                     *
+     * Project:  BuildUp, Python Version                        *
+     * Class:  Tile                                             *
+     * Date:  3.25/2023                                         *
+     ************************************************************
+"""
+
 class Tile:
 
     # Constructor

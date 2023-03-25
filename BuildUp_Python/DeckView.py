@@ -1,4 +1,13 @@
 
+"""
+     ************************************************************
+     * Name:  Andrew Kinney                                     *
+     * Project:  BuildUp, Python Version                        *
+     * Class:  Deck View                                        *
+     * Date:  3.25/2023                                         *
+     ************************************************************
+"""
+
 from TileView import TileView
 
 class DeckView:

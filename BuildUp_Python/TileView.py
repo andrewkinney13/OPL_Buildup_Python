@@ -1,4 +1,13 @@
 
+"""
+     ************************************************************
+     * Name:  Andrew Kinney                                     *
+     * Project:  BuildUp, Python Version                        *
+     * Class:  Tile View                                        *
+     * Date:  3.25/2023                                         *
+     ************************************************************
+"""
+
 import tkinter as tk
 
 class TileView:

@@ -1,4 +1,13 @@
 
+"""
+     ************************************************************
+     * Name:  Andrew Kinney                                     *
+     * Project:  BuildUp, Python Version                        *
+     * Class:  Round View                                       *
+     * Date:  3.25/2023                                         *
+     ************************************************************
+"""
+
 class RoundView:
     
     # Constructor

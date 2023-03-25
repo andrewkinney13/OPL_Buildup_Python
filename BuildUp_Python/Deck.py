@@ -1,10 +1,18 @@
 
+"""
+     ************************************************************
+     * Name:  Andrew Kinney                                     *
+     * Project:  BuildUp, Python Version                        *
+     * Class:  Deck                                             *
+     * Date:  3.25/2023                                         *
+     ************************************************************
+"""
+
 from Tile import Tile
 import random
 
 class Deck:
 
-    # Constructor
     def __init__(self, tileSetSize = 6):
         self.boneyard = []
         self.stack = []

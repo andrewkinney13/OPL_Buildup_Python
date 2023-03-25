@@ -1,4 +1,13 @@
 
+"""
+     ************************************************************
+     * Name:  Andrew Kinney                                     *
+     * Project:  BuildUp, Python Version                        *
+     * Class:  Tournament                                       *
+     * Date:  3.25/2023                                         *
+     ************************************************************
+"""
+
 from TournamentView import TournamentView
 from Human import Human
 from Computer import Computer
